@@ -360,7 +360,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
 
       <div className="game-board">
         <ChessBoard
-          fen="8/8/8/8/8/8/8/8" // Empty board
+          fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" // Starting position
           flipped={currentPerspective === 'black'}
           correctSquare={feedback?.type === 'correct' ? feedback.square : null}
           wrongSquare={feedback?.type === 'wrong' ? feedback.square : null}

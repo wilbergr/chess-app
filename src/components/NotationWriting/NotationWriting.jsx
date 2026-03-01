@@ -476,8 +476,6 @@ const NotationWriting = ({ onBack }) => {
   }
 
   // Game screen
-  const hideSquares = settings.hideFromTo && mode === 'challenge'
-
   return (
     <div className="notation-writing playing">
       <div className="game-header">
@@ -520,14 +518,6 @@ const NotationWriting = ({ onBack }) => {
           selectedSquare={currentMove?.from}
         />
       </div>
-
-      {!hideSquares && currentMove && (
-        <div className="move-hint">
-          <span className="from-square">{currentMove.from.toUpperCase()}</span>
-          <span className="arrow">→</span>
-          <span className="to-square">{currentMove.to.toUpperCase()}</span>
-        </div>
-      )}
 
       <form className="input-form" onSubmit={handleSubmit}>
         <input
