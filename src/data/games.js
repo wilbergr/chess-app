@@ -49,6 +49,42 @@ export const GAMES = {
         'O-O', 'O-O', 'd3', 'd6', 'Bg5', 'Bxc3', 'bxc3', 'Qe7'
       ],
     },
+    {
+      id: 'ruy-lopez',
+      title: 'Ruy Lopez (Spanish Opening)',
+      description: 'One of the oldest and most classical of all chess openings',
+      moves: [
+        'e4', 'e5', 'Nf3', 'Nc6', 'Bb5', 'a6', 'Ba4', 'Nf6',
+        'O-O', 'Be7', 'Re1', 'b5', 'Bb3', 'd6', 'c3', 'O-O'
+      ],
+    },
+    {
+      id: 'sicilian-dragon',
+      title: 'Sicilian Dragon',
+      description: 'Black fianchettoes the kingside bishop in the Sicilian Defense',
+      moves: [
+        'e4', 'c5', 'Nf3', 'd6', 'd4', 'cxd4', 'Nxd4', 'Nf6',
+        'Nc3', 'g6', 'Be3', 'Bg7', 'f3', 'O-O', 'Qd2', 'Nc6'
+      ],
+    },
+    {
+      id: 'kings-indian',
+      title: "King's Indian Defense",
+      description: "Black allows White to control the center and then counterattacks",
+      moves: [
+        'd4', 'Nf6', 'c4', 'g6', 'Nc3', 'Bg7', 'e4', 'd6',
+        'Nf3', 'O-O', 'Be2', 'e5', 'O-O', 'Nc6', 'd5', 'Ne7'
+      ],
+    },
+    {
+      id: 'french-advance',
+      title: 'French Defense — Advance Variation',
+      description: 'White grabs space with e5; Black counterattacks with c5',
+      moves: [
+        'e4', 'e6', 'd4', 'd5', 'e5', 'c5', 'c3', 'Nc6',
+        'Nf3', 'Qb6', 'Be2', 'cxd4', 'cxd4', 'Nge7', 'Nc3', 'Nf5'
+      ],
+    },
   ],
 
   // INTERMEDIATE: Medium-length games (20-30 moves)
@@ -113,6 +149,33 @@ export const GAMES = {
         'O-O', 'c6', 'd4', 'Kd6', 'Bf4', 'Kc7', 'Nxd5+', 'Nxd5', 'Bxd5', 'cxd5', 'Qxd5'
       ],
     },
+    {
+      id: 'rubinstein-immortal',
+      title: "Rubinstein's Immortal",
+      description: 'Rotlewi vs Rubinstein, Lodz 1907 — rook and queen sacrifice',
+      moves: [
+        'd4', 'd5', 'Nf3', 'e6', 'e3', 'c5', 'c4', 'Nc6',
+        'Nc3', 'Nf6', 'dxc5', 'Bxc5', 'a3', 'a6', 'b4', 'Bd6',
+        'Bb2', 'O-O', 'Qd2', 'Qe7', 'Bd3', 'dxc4', 'Bxc4', 'b5',
+        'Bd3', 'Rd8', 'Qe2', 'Bb7', 'O-O', 'Ne5', 'Nxe5', 'Bxe5',
+        'f4', 'Bc7', 'e4', 'Rac8', 'e5', 'Bb6+', 'Kh1', 'Ng4',
+        'Be4', 'Qh4', 'g3', 'Rxc3', 'gxh4', 'Rd2', 'Qxd2', 'Bxe4+', 'Qg2', 'Rh3'
+      ],
+    },
+    {
+      id: 'byrne-fischer-1963',
+      title: 'The Brilliancy Prize',
+      description: 'Byrne vs Fischer, US Championship 1963 — Fischer\'s queen sacrifice',
+      moves: [
+        'd4', 'Nf6', 'c4', 'g6', 'g3', 'c6', 'Bg2', 'd5',
+        'cxd5', 'cxd5', 'Nc3', 'Bg7', 'e3', 'O-O',
+        'Nge2', 'Nc6', 'O-O', 'b6', 'b3', 'Ba6',
+        'Ba3', 'Re8', 'Qd2', 'e5', 'dxe5', 'Nxe5',
+        'Rfd1', 'Nd3', 'Qc2', 'Nxf2', 'Kxf2', 'Ng4+',
+        'Kg1', 'Nxe3', 'Qd2', 'Nxg2', 'Kxg2', 'd4',
+        'Nxd4', 'Bb7+', 'Kf1', 'Qd7'
+      ],
+    },
   ],
 
   // ADVANCED: Full famous games (30-50 moves)
@@ -157,6 +220,44 @@ export const GAMES = {
         'Qxf3', 'dxe5', 'Bc4', 'Nf6', 'Qb3', 'Qe7', 'Nc3', 'c6',
         'Bg5', 'b5', 'Nxb5', 'cxb5', 'Bxb5+', 'Nbd7', 'O-O-O', 'Rd8',
         'Rxd7', 'Rxd7', 'Rd1', 'Qe6', 'Bxd7+', 'Nxd7', 'Qb8+', 'Nxb8', 'Rd8#'
+      ],
+    },
+    {
+      id: 'fischer-spassky-1972-g6',
+      title: 'Fischer vs Spassky 1972, Game 6',
+      description: 'World Championship 1972, Game 6 — Fischer\'s finest positional game',
+      moves: [
+        'c4', 'e6', 'Nf3', 'd5', 'd4', 'Nf6', 'Nc3', 'Be7',
+        'Bg5', 'O-O', 'e3', 'h6', 'Bh4', 'b6', 'cxd5', 'Nxd5',
+        'Bxe7', 'Qxe7', 'Nxd5', 'exd5', 'Rc1', 'Be6', 'Qa4', 'c5',
+        'Qa3', 'Rc8', 'Bb5', 'a6', 'dxc5', 'bxc5', 'O-O', 'Ra7',
+        'Be2', 'Nd7', 'Nd4', 'Qf8', 'Nxe6', 'fxe6', 'e4', 'd4',
+        'f4', 'Qe7', 'e5', 'Rb8', 'Bc4', 'Kh8', 'Qh3', 'Nf8',
+        'b3', 'a5', 'f5', 'exf5', 'Rxf5', 'Nh7', 'Rcf1', 'Qd8',
+        'Qg3', 'Re7', 'h4', 'Rbb7', 'e6', 'Rbc7', 'Qe5', 'Qe8',
+        'a4', 'Qd8', 'R1f2', 'Qe8', 'R2f3', 'Qd8', 'Bd3', 'Qe8',
+        'Qe4', 'Nf6', 'Rxf6', 'gxf6', 'Rxf6', 'Kg8', 'Bc4', 'Kh8', 'Qf4'
+      ],
+    },
+    {
+      id: 'torre-lasker-1925',
+      title: 'The Windmill',
+      description: 'Torre vs Lasker, Moscow 1925 — queen sacrifice and windmill combination',
+      moves: [
+        'd4', 'Nf6', 'Nf3', 'e6', 'Bg5', 'c5', 'e3', 'cxd4',
+        'exd4', 'Be7', 'Nbd2', 'd6', 'c3', 'Nbd7', 'Bd3', 'b6',
+        'Nc4', 'Bb7', 'Qe2', 'Qc7', 'O-O', 'O-O',
+        'Rfe1', 'Rfe8', 'Rad1', 'Nf8', 'Bc1', 'Nd5',
+        'Ng5', 'b5', 'Na3', 'b4', 'cxb4', 'Nxb4',
+        'Qh5', 'Bxg5', 'Bxg5', 'Nxd3', 'Rxd3', 'Qa5',
+        'b4', 'Qf5', 'Rg3', 'h6', 'Nc4', 'Qd5',
+        'Ne3', 'Qb5', 'Bf6', 'Qxh5',
+        'Rxg7+', 'Kh8', 'Rxf7+', 'Kg8', 'Rg7+', 'Kh8',
+        'Rxb7+', 'Kg8', 'Rg7+', 'Kh8', 'Rg5+', 'Kh7',
+        'Rxh5', 'Kg6', 'Rh3', 'Kxf6', 'Rxh6+', 'Kg5',
+        'Rh3', 'Reb8', 'Rg3+', 'Kf6', 'Rf3+', 'Kg6',
+        'a3', 'a5', 'bxa5', 'Rxa5', 'Nc4', 'Rd5',
+        'Rf4', 'Nd7', 'Rxe6+', 'Kg5', 'g3'
       ],
     },
     {
