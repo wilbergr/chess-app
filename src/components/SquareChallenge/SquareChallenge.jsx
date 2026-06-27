@@ -24,6 +24,14 @@ const SquareChallenge = ({ onComplete, onBack }) => {
   // Game settings
   const [mode, setMode] = useState(null) // 'practice' or 'challenge'
   const [difficulty, setDifficulty] = useState('medium')
+  const [challengeConfig, setChallengeConfig] = useState(null)
+
+  useEffect(() => {
+    fetch('challenge-config.json')
+      .then((r) => r.json())
+      .then(setChallengeConfig)
+      .catch(() => {})
+  }, [])
   const [perspective, setPerspective] = useState('white') // 'white', 'black', or 'both'
 
   // Game state
@@ -312,6 +320,13 @@ const SquareChallenge = ({ onComplete, onBack }) => {
               ? 'Great job! You passed the challenge!'
               : 'Keep practicing! You need 75% to pass.'}
           </div>
+
+          {difficulty === 'hard' && results.accuracy >= 90 && challengeConfig?.squareChallengeCode && (
+            <div className="challenge-code">
+              <p className="challenge-code-label">Hard mode master! Your unlock code:</p>
+              <span className="challenge-code-value">{challengeConfig.squareChallengeCode}</span>
+            </div>
+          )}
         </div>
 
         <div className="action-buttons">

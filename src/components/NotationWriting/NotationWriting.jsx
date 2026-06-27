@@ -61,6 +61,14 @@ const NotationWriting = ({ onBack }) => {
   const [mode, setMode] = useState(null)
   const [difficulty, setDifficulty] = useState('beginner')
   const [perspective, setPerspective] = useState('white') // 'white', 'black', or 'both'
+  const [challengeConfig, setChallengeConfig] = useState(null)
+
+  useEffect(() => {
+    fetch('challenge-config.json')
+      .then((r) => r.json())
+      .then(setChallengeConfig)
+      .catch(() => {})
+  }, [])
 
   // Game state
   const [isPlaying, setIsPlaying] = useState(false)
@@ -461,6 +469,13 @@ const NotationWriting = ({ onBack }) => {
               ? 'Great job! You know your notation!'
               : 'Keep practicing! You need 75% to pass.'}
           </div>
+
+          {difficulty === 'advanced' && results.accuracy >= 90 && challengeConfig?.notationWritingCode && (
+            <div className="challenge-code">
+              <p className="challenge-code-label">Advanced mode master! Your unlock code:</p>
+              <span className="challenge-code-value">{challengeConfig.notationWritingCode}</span>
+            </div>
+          )}
         </div>
 
         <div className="action-buttons">
