@@ -47,6 +47,9 @@ const GameChallenge = ({ onBack }) => {
   const [showResults, setShowResults] = useState(false)
   const [results, setResults] = useState(null)
 
+  // Coordinate display
+  const [showCoords, setShowCoords] = useState(true)
+
   // Refs
   const trackerRef = useRef(new PerformanceTracker())
   const timerRef = useRef(null)
@@ -664,6 +667,7 @@ const GameChallenge = ({ onBack }) => {
             selectedSquare={selectedSquare}
             highlightedSquares={validMoves}
             onSquareClick={handleSquareClick}
+            showLabels={mode === 'challenge' && difficulty === 'advanced' ? false : showCoords}
           />
         )}
       </div>
@@ -690,6 +694,17 @@ const GameChallenge = ({ onBack }) => {
           <button className="hide-button" onClick={toggleBoard}>
             🙈 Hide Board
           </button>
+        )}
+
+        {mode === 'practice' && (
+          <label className="coords-toggle">
+            <input
+              type="checkbox"
+              checked={showCoords}
+              onChange={(e) => setShowCoords(e.target.checked)}
+            />
+            Show coordinates
+          </label>
         )}
 
         <button className="quit-button" onClick={() => {

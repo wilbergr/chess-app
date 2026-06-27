@@ -37,6 +37,7 @@ const ChessBoard = ({
   correctSquare = null,
   wrongSquare = null,
   showCoordinates = false,
+  showLabels = true,
   onSquareClick = () => {},
 }) => {
   const pieces = useMemo(() => parseFEN(fen), [fen])
@@ -70,11 +71,13 @@ const ChessBoard = ({
 
   return (
     <div className="chess-board-container">
-      <div className="rank-labels">
-        {rankLabels.map((rank) => (
-          <div key={rank} className="rank-label">{rank}</div>
-        ))}
-      </div>
+      {showLabels && (
+        <div className="rank-labels">
+          {rankLabels.map((rank) => (
+            <div key={rank} className="rank-label">{rank}</div>
+          ))}
+        </div>
+      )}
       <div className="board-and-files">
         <div className="chess-board">
           {squares.map(({ square, isLight, piece }) => (
@@ -93,11 +96,13 @@ const ChessBoard = ({
             />
           ))}
         </div>
-        <div className="file-labels">
-          {fileLabels.map((file) => (
-            <div key={file} className="file-label">{file}</div>
-          ))}
-        </div>
+        {showLabels && (
+          <div className="file-labels">
+            {fileLabels.map((file) => (
+              <div key={file} className="file-label">{file}</div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

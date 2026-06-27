@@ -43,6 +43,32 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+/* Coordinates toggle in practice mode */
+.coords-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+}
+
+.coords-toggle input[type="checkbox"] {
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+
+.practice-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
 /* Challenge unlock code (hard mode 90%+) */
 .challenge-code {
   margin-top: 1rem;

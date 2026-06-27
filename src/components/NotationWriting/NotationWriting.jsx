@@ -85,6 +85,9 @@ const NotationWriting = ({ onBack }) => {
   const [showResults, setShowResults] = useState(false)
   const [results, setResults] = useState(null)
 
+  // Coordinate display
+  const [showCoords, setShowCoords] = useState(true)
+
   // Refs
   const trackerRef = useRef(new PerformanceTracker())
   const timerRef = useRef(null)
@@ -531,6 +534,7 @@ const NotationWriting = ({ onBack }) => {
           flipped={currentPerspective === 'black'}
           highlightedSquares={[currentMove?.from, currentMove?.to].filter(Boolean)}
           selectedSquare={currentMove?.from}
+          showLabels={mode === 'challenge' && difficulty === 'advanced' ? false : showCoords}
         />
       </div>
 
@@ -570,6 +574,17 @@ const NotationWriting = ({ onBack }) => {
               Skip →
             </button>
           </>
+        )}
+
+        {mode === 'practice' && (
+          <label className="coords-toggle">
+            <input
+              type="checkbox"
+              checked={showCoords}
+              onChange={(e) => setShowCoords(e.target.checked)}
+            />
+            Show coordinates
+          </label>
         )}
 
         <button className="stop-button" onClick={() => setMode(null)}>

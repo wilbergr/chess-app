@@ -46,6 +46,9 @@ const SquareChallenge = ({ onComplete, onBack }) => {
   const [showResults, setShowResults] = useState(false)
   const [results, setResults] = useState(null)
 
+  // Coordinate display
+  const [showCoords, setShowCoords] = useState(true)
+
   // Refs
   const trackerRef = useRef(new PerformanceTracker())
   const timerRef = useRef(null)
@@ -385,6 +388,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
               : []
           }
           onSquareClick={handleSquareClick}
+          showLabels={mode === 'challenge' && difficulty === 'hard' ? false : showCoords}
         />
       </div>
 
@@ -397,9 +401,19 @@ const SquareChallenge = ({ onComplete, onBack }) => {
       )}
 
       {mode === 'practice' && (
-        <button className="stop-button" onClick={() => setMode(null)}>
-          End Practice
-        </button>
+        <div className="practice-controls">
+          <label className="coords-toggle">
+            <input
+              type="checkbox"
+              checked={showCoords}
+              onChange={(e) => setShowCoords(e.target.checked)}
+            />
+            Show coordinates
+          </label>
+          <button className="stop-button" onClick={() => setMode(null)}>
+            End Practice
+          </button>
+        </div>
       )}
     </div>
   )
