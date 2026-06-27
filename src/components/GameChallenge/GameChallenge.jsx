@@ -50,6 +50,7 @@ const GameChallenge = ({ onBack }) => {
   // Refs
   const trackerRef = useRef(new PerformanceTracker())
   const timerRef = useRef(null)
+  const advanceMoveRef = useRef(null)
 
   // Get current settings
   const settings = difficulty ? DIFFICULTY_SETTINGS[difficulty] : null
@@ -90,6 +91,11 @@ const GameChallenge = ({ onBack }) => {
     return { start, end }
   }, [settings, selectedGame, currentMoveIndex])
 
+  // Keep ref pointing at the latest advanceMove so timer closures are never stale
+  useEffect(() => {
+    advanceMoveRef.current = advanceMove
+  })
+
   // Clear timer
   const clearTimer = useCallback(() => {
     if (timerRef.current) {
@@ -123,7 +129,7 @@ const GameChallenge = ({ onBack }) => {
 
           // Auto-advance after delay
           setTimeout(() => {
-            advanceMove()
+            advanceMoveRef.current?.()
           }, 1500)
 
           return 0
