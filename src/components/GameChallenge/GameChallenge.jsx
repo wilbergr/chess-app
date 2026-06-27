@@ -11,9 +11,9 @@ import {
 import './GameChallenge.css'
 
 const DIFFICULTY_SETTINGS = {
-  beginner: { movesVisible: 3, timePerMove: null, showBoard: true, label: 'Beginner' },
-  intermediate: { movesVisible: 2, timePerMove: 30, showBoard: true, label: 'Intermediate' },
-  advanced: { movesVisible: 1, timePerMove: 20, showBoard: true, label: 'Advanced' },
+  beginner: { movesVisible: 3, timePerMove: 15, showBoard: true, label: 'Beginner' },
+  intermediate: { movesVisible: 2, timePerMove: 10, showBoard: true, label: 'Intermediate' },
+  advanced: { movesVisible: 1, timePerMove: 6, showBoard: true, label: 'Advanced' },
 }
 
 const GameChallenge = ({ onBack }) => {
