@@ -1,10 +1,10 @@
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color: #333;
-  background-color: #f5f5f5;
+  color: #f0d9b5;
+  background-color: #1a1a1a;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -22,6 +22,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #1a1a1a;
 }
 
 #root {
@@ -39,11 +40,10 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid #4CAF50;
+  outline: 2px solid #81b64c;
   outline-offset: 2px;
 }
 
-/* Coordinates toggle in practice mode */
 .coords-toggle {
   display: inline-flex;
   align-items: center;
@@ -51,13 +51,14 @@ button:focus-visible {
   font-size: 14px;
   cursor: pointer;
   user-select: none;
-  color: #555;
+  color: #9b8f7f;
 }
 
 .coords-toggle input[type="checkbox"] {
   cursor: pointer;
   width: 15px;
   height: 15px;
+  accent-color: #81b64c;
 }
 
 .practice-controls {
@@ -69,12 +70,11 @@ button:focus-visible {
   margin-top: 8px;
 }
 
-/* Challenge unlock code (hard mode 90%+) */
 .challenge-code {
   margin-top: 1rem;
   padding: 0.75rem 1.25rem;
-  background: rgba(255, 215, 0, 0.12);
-  border: 2px solid rgba(255, 215, 0, 0.5);
+  background: rgba(232, 160, 57, 0.1);
+  border: 2px solid rgba(232, 160, 57, 0.4);
   border-radius: 10px;
   text-align: center;
 }
@@ -82,7 +82,7 @@ button:focus-visible {
 .challenge-code-label {
   margin: 0 0 0.4rem 0;
   font-size: 0.8rem;
-  color: #666;
+  color: #9b8f7f;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -92,7 +92,7 @@ button:focus-visible {
   font-family: 'Courier New', monospace;
   font-size: 1.4rem;
   font-weight: 700;
-  color: #b8860b;
+  color: #e8a039;
   letter-spacing: 0.15em;
   user-select: all;
 }
