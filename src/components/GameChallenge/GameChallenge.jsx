@@ -50,6 +50,9 @@ const GameChallenge = ({ onBack }) => {
   // Coordinate display
   const [showCoords, setShowCoords] = useState(true)
 
+  // Auto-play pending: true while the opponent's move is being animated
+  const [autoPlayPending, setAutoPlayPending] = useState(false)
+
   // Refs
   const trackerRef = useRef(new PerformanceTracker())
   const timerRef = useRef(null)
@@ -98,6 +101,62 @@ const GameChallenge = ({ onBack }) => {
   useEffect(() => {
     advanceMoveRef.current = advanceMove
   })
+
+  // Auto-play the opponent's move when perspective is 'white' or 'black' (practice mode only)
+  useEffect(() => {
+    if (!isPlaying || !chess || !selectedGame || showResults) return
+    if (perspective === 'both' || mode === 'challenge') return
+
+    const isWhiteMove = currentMoveIndex % 2 === 0
+    const shouldAutoPlay =
+      (perspective === 'white' && !isWhiteMove) ||
+      (perspective === 'black' && isWhiteMove)
+
+    if (!shouldAutoPlay) return
+
+    setAutoPlayPending(true)
+    setSelectedSquare(null)
+    setValidMoves([])
+    setFeedback(null)
+
+    // Capture values so the timeout closure is never stale
+    const capturedChess = chess
+    const capturedMoveIndex = currentMoveIndex
+    const capturedGame = selectedGame
+
+    const timeout = setTimeout(() => {
+      const move = capturedGame.moves[capturedMoveIndex]
+      if (!move) {
+        setAutoPlayPending(false)
+        return
+      }
+
+      const newChess = new Chess(capturedChess.fen())
+      try {
+        newChess.move(move)
+      } catch (e) {
+        console.error('Failed to auto-play move:', move, e)
+        setAutoPlayPending(false)
+        return
+      }
+
+      setChess(newChess)
+
+      const nextIndex = capturedMoveIndex + 1
+      if (nextIndex >= capturedGame.moves.length) {
+        setIsPlaying(false)
+        setShowResults(true)
+        setResults(trackerRef.current.getResults())
+        clearTimer()
+      } else {
+        setCurrentMoveIndex(nextIndex)
+      }
+
+      setAutoPlayPending(false)
+    }, 400)
+
+    return () => clearTimeout(timeout)
+  }, [currentMoveIndex, isPlaying, chess, selectedGame, perspective, mode, showResults, clearTimer])
 
   // Clear timer
   const clearTimer = useCallback(() => {
@@ -182,7 +241,7 @@ const GameChallenge = ({ onBack }) => {
   // Handle square click
   const handleSquareClick = useCallback(
     (clickedSquare) => {
-      if (!isPlaying || feedback || !chess) return
+      if (!isPlaying || feedback || !chess || autoPlayPending) return
 
       const fen = chess.fen()
 
@@ -267,7 +326,7 @@ const GameChallenge = ({ onBack }) => {
         }
       }
     },
-    [isPlaying, feedback, chess, selectedSquare, currentMove, mode, clearTimer, advanceMove, startTimer]
+    [isPlaying, feedback, chess, selectedSquare, currentMove, mode, clearTimer, advanceMove, startTimer, autoPlayPending]
   )
 
   // Handle hint button (practice mode)
@@ -326,6 +385,7 @@ const GameChallenge = ({ onBack }) => {
     trackerRef.current.startChallenge()
     trackerRef.current.startAttempt()
 
+    setAutoPlayPending(false)
     setIsPlaying(true)
 
     if (mode === 'challenge' && settings?.timePerMove) {
@@ -453,7 +513,6 @@ const GameChallenge = ({ onBack }) => {
   // Results screen
   if (showResults && results) {
     const totalMoves = selectedGame.moves.length
-    const completionRate = Math.round((results.correct / totalMoves) * 100)
 
     return (
       <div className="game-challenge">
@@ -487,7 +546,7 @@ const GameChallenge = ({ onBack }) => {
           </div>
 
           <div className="result-message">
-            {completionRate === 100
+            {results.accuracy === 100
               ? 'Perfect! You played every move correctly!'
               : results.passed
               ? 'Great job! You completed the game!'
@@ -535,7 +594,7 @@ const GameChallenge = ({ onBack }) => {
 
         {mode === 'practice' && (
           <div className="setting-group">
-            <label>Board Perspective</label>
+            <label>Play as</label>
             <div className="perspective-options">
               <button
                 className={`perspective-option ${perspective === 'white' ? 'selected' : ''}`}
@@ -556,6 +615,11 @@ const GameChallenge = ({ onBack }) => {
                 Both
               </button>
             </div>
+            {perspective !== 'both' && (
+              <p className="perspective-hint">
+                You play {perspective === 'white' ? 'White' : 'Black'} — the opponent moves automatically
+              </p>
+            )}
           </div>
         )}
 
@@ -594,7 +658,10 @@ const GameChallenge = ({ onBack }) => {
         </div>
 
         <div className="perspective-indicator">
-          Playing as: <strong>{currentPerspective === 'white' ? '⚪ White' : '⚫ Black'}</strong>
+          {autoPlayPending
+            ? <span className="auto-play-indicator">Opponent is moving...</span>
+            : <>Playing as: <strong>{currentPerspective === 'white' ? '⚪ White' : '⚫ Black'}</strong></>
+          }
         </div>
 
         <div className="notation-display">

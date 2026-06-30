@@ -306,6 +306,18 @@
   margin-bottom: 10px;
 }
 
+.auto-play-indicator {
+  color: #f0d9b5;
+  font-style: italic;
+}
+
+.perspective-hint {
+  font-size: 0.8rem;
+  color: #6b6b6b;
+  text-align: center;
+  margin: 6px 0 0 0;
+}
+
 /* Action Buttons */
 .action-buttons {
   display: flex;
