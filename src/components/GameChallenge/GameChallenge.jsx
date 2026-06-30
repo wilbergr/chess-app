@@ -97,67 +97,6 @@ const GameChallenge = ({ onBack }) => {
     return { start, end }
   }, [settings, selectedGame, currentMoveIndex])
 
-  // Keep ref pointing at the latest advanceMove so timer closures are never stale
-  useEffect(() => {
-    advanceMoveRef.current = advanceMove
-  })
-
-  // Auto-play the opponent's move when perspective is 'white' or 'black' (practice mode only)
-  useEffect(() => {
-    if (!isPlaying || !chess || !selectedGame || showResults) return
-    if (perspective === 'both' || mode === 'challenge') return
-
-    const isWhiteMove = currentMoveIndex % 2 === 0
-    const shouldAutoPlay =
-      (perspective === 'white' && !isWhiteMove) ||
-      (perspective === 'black' && isWhiteMove)
-
-    if (!shouldAutoPlay) return
-
-    setAutoPlayPending(true)
-    setSelectedSquare(null)
-    setValidMoves([])
-    setFeedback(null)
-
-    // Capture values so the timeout closure is never stale
-    const capturedChess = chess
-    const capturedMoveIndex = currentMoveIndex
-    const capturedGame = selectedGame
-
-    const timeout = setTimeout(() => {
-      const move = capturedGame.moves[capturedMoveIndex]
-      if (!move) {
-        setAutoPlayPending(false)
-        return
-      }
-
-      const newChess = new Chess(capturedChess.fen())
-      try {
-        newChess.move(move)
-      } catch (e) {
-        console.error('Failed to auto-play move:', move, e)
-        setAutoPlayPending(false)
-        return
-      }
-
-      setChess(newChess)
-
-      const nextIndex = capturedMoveIndex + 1
-      if (nextIndex >= capturedGame.moves.length) {
-        setIsPlaying(false)
-        setShowResults(true)
-        setResults(trackerRef.current.getResults())
-        clearTimer()
-      } else {
-        setCurrentMoveIndex(nextIndex)
-      }
-
-      setAutoPlayPending(false)
-    }, 400)
-
-    return () => clearTimeout(timeout)
-  }, [currentMoveIndex, isPlaying, chess, selectedGame, perspective, mode, showResults, clearTimer])
-
   // Clear timer
   const clearTimer = useCallback(() => {
     if (timerRef.current) {
@@ -237,6 +176,67 @@ const GameChallenge = ({ onBack }) => {
       startTimer()
     }
   }, [selectedGame, currentMoveIndex, chess, mode, clearTimer, startTimer])
+
+  // Keep ref pointing at the latest advanceMove so timer closures are never stale
+  useEffect(() => {
+    advanceMoveRef.current = advanceMove
+  })
+
+  // Auto-play the opponent's move when perspective is 'white' or 'black' (practice mode only)
+  useEffect(() => {
+    if (!isPlaying || !chess || !selectedGame || showResults) return
+    if (perspective === 'both' || mode === 'challenge') return
+
+    const isWhiteMove = currentMoveIndex % 2 === 0
+    const shouldAutoPlay =
+      (perspective === 'white' && !isWhiteMove) ||
+      (perspective === 'black' && isWhiteMove)
+
+    if (!shouldAutoPlay) return
+
+    setAutoPlayPending(true)
+    setSelectedSquare(null)
+    setValidMoves([])
+    setFeedback(null)
+
+    // Capture values so the timeout closure is never stale
+    const capturedChess = chess
+    const capturedMoveIndex = currentMoveIndex
+    const capturedGame = selectedGame
+
+    const timeout = setTimeout(() => {
+      const move = capturedGame.moves[capturedMoveIndex]
+      if (!move) {
+        setAutoPlayPending(false)
+        return
+      }
+
+      const newChess = new Chess(capturedChess.fen())
+      try {
+        newChess.move(move)
+      } catch (e) {
+        console.error('Failed to auto-play move:', move, e)
+        setAutoPlayPending(false)
+        return
+      }
+
+      setChess(newChess)
+
+      const nextIndex = capturedMoveIndex + 1
+      if (nextIndex >= capturedGame.moves.length) {
+        setIsPlaying(false)
+        setShowResults(true)
+        setResults(trackerRef.current.getResults())
+        clearTimer()
+      } else {
+        setCurrentMoveIndex(nextIndex)
+      }
+
+      setAutoPlayPending(false)
+    }, 400)
+
+    return () => clearTimeout(timeout)
+  }, [currentMoveIndex, isPlaying, chess, selectedGame, perspective, mode, showResults, clearTimer])
 
   // Handle square click
   const handleSquareClick = useCallback(
