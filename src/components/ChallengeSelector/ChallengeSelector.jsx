@@ -133,7 +133,7 @@ const ChallengeSelector = ({ onSelectChallenge }) => {
       </div>
 
       <footer className="footer">
-        <a href="/" className="home-link">← Back to Home</a>
+        <a href="/" className="btn btn-ghost home-link">← Back to Home</a>
       </footer>
     </div>
   )

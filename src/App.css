@@ -1,6 +1,6 @@
 .app {
   min-height: 100vh;
-  background: #1a1a1a;
+  background: var(--bg);
 }
 
 * {
@@ -13,11 +13,11 @@ button {
 
 .square-challenge,
 .notation-challenge {
-  background: #1a1a1a;
+  background: var(--bg);
   min-height: 100vh;
 }
 
 .square-challenge.playing,
 .notation-challenge.playing {
-  background: #1a1a1a;
+  background: var(--bg);
 }

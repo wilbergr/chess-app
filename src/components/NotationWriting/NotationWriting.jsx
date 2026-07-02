@@ -332,7 +332,7 @@ const NotationWriting = ({ onBack }) => {
           </div>
         </div>
 
-        <button className="back-button" onClick={onBack}>
+        <button className="btn btn-ghost back-button" onClick={onBack}>
           ← Back to Menu
         </button>
       </div>
@@ -367,19 +367,19 @@ const NotationWriting = ({ onBack }) => {
               <label>Board Perspective</label>
               <div className="perspective-options">
                 <button
-                  className={`perspective-option ${perspective === 'white' ? 'selected' : ''}`}
+                  className={`btn btn-secondary perspective-option ${perspective === 'white' ? 'selected' : ''}`}
                   onClick={() => setPerspective('white')}
                 >
                   White
                 </button>
                 <button
-                  className={`perspective-option ${perspective === 'black' ? 'selected' : ''}`}
+                  className={`btn btn-secondary perspective-option ${perspective === 'black' ? 'selected' : ''}`}
                   onClick={() => setPerspective('black')}
                 >
                   Black
                 </button>
                 <button
-                  className={`perspective-option ${perspective === 'both' ? 'selected' : ''}`}
+                  className={`btn btn-secondary perspective-option ${perspective === 'both' ? 'selected' : ''}`}
                   onClick={() => setPerspective('both')}
                 >
                   Both
@@ -424,10 +424,10 @@ const NotationWriting = ({ onBack }) => {
         </div>
 
         <div className="action-buttons">
-          <button className="start-button" onClick={startGame}>
+          <button className="btn btn-primary start-button" onClick={startGame}>
             Start {mode === 'practice' ? 'Practice' : 'Challenge'}
           </button>
-          <button className="back-button" onClick={() => setMode(null)}>
+          <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
             ← Change Mode
           </button>
         </div>
@@ -482,10 +482,10 @@ const NotationWriting = ({ onBack }) => {
         </div>
 
         <div className="action-buttons">
-          <button className="start-button" onClick={startGame}>
+          <button className="btn btn-primary start-button" onClick={startGame}>
             Try Again
           </button>
-          <button className="back-button" onClick={() => setMode(null)}>
+          <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
             ← Change Settings
           </button>
         </div>
@@ -551,7 +551,7 @@ const NotationWriting = ({ onBack }) => {
           autoCapitalize="off"
           spellCheck="false"
         />
-        <button type="submit" className="submit-button" disabled={!!feedback || !userInput.trim()}>
+        <button type="submit" className="btn btn-primary submit-button" disabled={!!feedback || !userInput.trim()}>
           Submit
         </button>
       </form>
@@ -566,11 +566,11 @@ const NotationWriting = ({ onBack }) => {
         {mode === 'practice' && !feedback && (
           <>
             {settings.hints && (
-              <button className="hint-button" onClick={handleHint}>
+              <button className="btn hint-button" onClick={handleHint}>
                 💡 Hint
               </button>
             )}
-            <button className="skip-button" onClick={handleSkip}>
+            <button className="btn btn-secondary skip-button" onClick={handleSkip}>
               Skip →
             </button>
           </>
@@ -587,7 +587,7 @@ const NotationWriting = ({ onBack }) => {
           </label>
         )}
 
-        <button className="stop-button" onClick={() => setMode(null)}>
+        <button className="btn btn-danger stop-button" onClick={() => setMode(null)}>
           End {mode === 'practice' ? 'Practice' : 'Challenge'}
         </button>
       </div>

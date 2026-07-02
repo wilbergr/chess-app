@@ -435,7 +435,7 @@ const GameChallenge = ({ onBack }) => {
           </div>
         </div>
 
-        <button className="back-button" onClick={onBack}>
+        <button className="btn btn-ghost back-button" onClick={onBack}>
           ← Back to Menu
         </button>
       </div>
@@ -464,7 +464,7 @@ const GameChallenge = ({ onBack }) => {
           </div>
         </div>
 
-        <button className="back-button" onClick={() => setDifficulty(null)}>
+        <button className="btn btn-ghost back-button" onClick={() => setDifficulty(null)}>
           ← Change Difficulty
         </button>
       </div>
@@ -503,7 +503,7 @@ const GameChallenge = ({ onBack }) => {
           ))}
         </div>
 
-        <button className="back-button" onClick={() => setMode(null)}>
+        <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
           ← Change Mode
         </button>
       </div>
@@ -562,13 +562,13 @@ const GameChallenge = ({ onBack }) => {
         </div>
 
         <div className="action-buttons">
-          <button className="start-button" onClick={startGame}>
+          <button className="btn btn-primary start-button" onClick={startGame}>
             Play Again
           </button>
-          <button className="back-button" onClick={() => setSelectedGame(null)}>
+          <button className="btn btn-ghost back-button" onClick={() => setSelectedGame(null)}>
             Choose Different Game
           </button>
-          <button className="back-button" onClick={() => setMode(null)}>
+          <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
             Change Mode
           </button>
         </div>
@@ -597,19 +597,19 @@ const GameChallenge = ({ onBack }) => {
             <label>Play as</label>
             <div className="perspective-options">
               <button
-                className={`perspective-option ${perspective === 'white' ? 'selected' : ''}`}
+                className={`btn btn-secondary perspective-option ${perspective === 'white' ? 'selected' : ''}`}
                 onClick={() => setPerspective('white')}
               >
                 White
               </button>
               <button
-                className={`perspective-option ${perspective === 'black' ? 'selected' : ''}`}
+                className={`btn btn-secondary perspective-option ${perspective === 'black' ? 'selected' : ''}`}
                 onClick={() => setPerspective('black')}
               >
                 Black
               </button>
               <button
-                className={`perspective-option ${perspective === 'both' ? 'selected' : ''}`}
+                className={`btn btn-secondary perspective-option ${perspective === 'both' ? 'selected' : ''}`}
                 onClick={() => setPerspective('both')}
               >
                 Both
@@ -628,10 +628,10 @@ const GameChallenge = ({ onBack }) => {
         )}
 
         <div className="action-buttons">
-          <button className="start-button" onClick={startGame}>
+          <button className="btn btn-primary start-button" onClick={startGame}>
             Start Game
           </button>
-          <button className="back-button" onClick={() => setSelectedGame(null)}>
+          <button className="btn btn-ghost back-button" onClick={() => setSelectedGame(null)}>
             ← Choose Different Game
           </button>
         </div>
@@ -723,7 +723,7 @@ const GameChallenge = ({ onBack }) => {
             <div className="blindfold-icon">🙈</div>
             <p>Board Hidden</p>
             <p className="blindfold-hint">Visualize the position!</p>
-            <button className="peek-button" onClick={toggleBoard}>
+            <button className="btn peek-button" onClick={toggleBoard}>
               👁️ Peek (costs points)
             </button>
           </div>
@@ -748,17 +748,17 @@ const GameChallenge = ({ onBack }) => {
       <div className="game-controls">
         {mode === 'practice' && !feedback && (
           <>
-            <button className="hint-button" onClick={handleHint}>
+            <button className="btn hint-button" onClick={handleHint}>
               💡 Hint
             </button>
-            <button className="skip-button" onClick={handleSkip}>
+            <button className="btn btn-secondary skip-button" onClick={handleSkip}>
               Skip →
             </button>
           </>
         )}
 
         {difficulty === 'expert' && showBoard && (
-          <button className="hide-button" onClick={toggleBoard}>
+          <button className="btn btn-secondary hide-button" onClick={toggleBoard}>
             🙈 Hide Board
           </button>
         )}
@@ -774,7 +774,7 @@ const GameChallenge = ({ onBack }) => {
           </label>
         )}
 
-        <button className="quit-button" onClick={() => {
+        <button className="btn btn-danger quit-button" onClick={() => {
           clearTimer()
           setIsPlaying(false)
           setShowResults(true)

@@ -2,21 +2,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: var(--space-5);
   max-width: 600px;
   margin: 0 auto;
-  background: #1a1a1a;
+  background: var(--bg);
 }
 
 .square-challenge h2 {
-  margin: 0 0 10px 0;
-  color: #f0d9b5;
+  margin: 0 0 var(--space-3) 0;
+  color: var(--text);
   font-size: 1.8rem;
   font-weight: 700;
 }
 
 .square-challenge .description {
-  color: #9b8f7f;
+  color: var(--text-muted);
   text-align: center;
   margin-bottom: 30px;
   line-height: 1.5;
@@ -30,14 +30,14 @@
 
 .mode-selection h3 {
   text-align: center;
-  color: #9b8f7f;
-  margin-bottom: 20px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-5);
   font-weight: 600;
 }
 
 .mode-buttons {
   display: flex;
-  gap: 20px;
+  gap: var(--space-5);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -47,45 +47,45 @@
   flex-direction: column;
   align-items: center;
   padding: 25px 35px;
-  border: 1px solid #3d3d3d;
-  border-radius: 12px;
-  background: #262626;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 180px;
-  color: #f0d9b5;
+  color: var(--text);
 }
 
 .mode-button:hover {
-  border-color: #81b64c;
+  border-color: var(--accent);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-  background: #2d2d2d;
+  box-shadow: var(--shadow-md);
+  background: var(--surface-2);
 }
 
 .mode-button.practice:hover {
-  border-color: #81b64c;
+  border-color: var(--accent);
 }
 
 .mode-button.challenge:hover {
-  border-color: #e8a039;
+  border-color: var(--warning);
 }
 
 .mode-icon {
   font-size: 2.5rem;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-3);
 }
 
 .mode-name {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #f0d9b5;
+  color: var(--text);
   margin-bottom: 5px;
 }
 
 .mode-desc {
   font-size: 0.85rem;
-  color: #6b6b6b;
+  color: var(--text-faint);
 }
 
 /* Settings */
@@ -101,144 +101,96 @@
 .setting-group label {
   display: block;
   font-weight: 600;
-  color: #9b8f7f;
-  margin-bottom: 12px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
   text-align: center;
 }
 
 .option-buttons {
   display: flex;
-  gap: 10px;
+  gap: var(--space-3);
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.option-button {
-  padding: 12px 24px;
-  border: 1px solid #3d3d3d;
-  border-radius: 8px;
-  background: #262626;
-  cursor: pointer;
-  font-size: 1rem;
-  color: #f0d9b5;
-  transition: all 0.2s ease;
-}
-
-.option-button:hover {
-  border-color: #81b64c;
-  background: #2d2d2d;
-}
-
-.option-button.selected {
-  border-color: #81b64c;
-  background: #81b64c;
-  color: #1a1a1a;
+/* .option-button composes .btn .btn-secondary in markup — only the selected
+   state is component-specific. */
+.option-button.selected,
+.option-button.selected:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
   font-weight: 600;
 }
 
 .challenge-note {
   text-align: center;
-  color: #6b6b6b;
+  color: var(--text-faint);
   font-size: 0.9rem;
-  margin-top: 10px;
+  margin-top: var(--space-3);
 }
 
 /* Action Buttons */
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: var(--space-4);
   width: 100%;
   max-width: 300px;
 }
 
+/* .start-button composes .btn .btn-primary — larger type + lift on hover. */
 .start-button {
-  padding: 16px 40px;
+  padding: var(--space-4) 40px;
   font-size: 1.2rem;
-  font-weight: 600;
-  background: #81b64c;
-  color: #1a1a1a;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.start-button:hover {
-  background: #6fa03e;
+.start-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(129, 182, 76, 0.3);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
-.back-button {
-  padding: 12px 24px;
-  font-size: 1rem;
-  background: transparent;
-  color: #9b8f7f;
-  border: 1px solid #3d3d3d;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.back-button:hover {
-  background: #262626;
-  border-color: #4d4d4d;
-  color: #f0d9b5;
-}
-
+/* .stop-button composes .btn .btn-danger. */
 .stop-button {
-  margin-top: 20px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  background: #c0392b;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.stop-button:hover {
-  background: #a93226;
+  margin-top: var(--space-5);
 }
 
 /* Game Screen */
 .square-challenge.playing {
-  padding: 15px;
+  padding: var(--space-4);
 }
 
 .game-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
   width: 100%;
 }
 
 .game-info {
   display: flex;
-  gap: 20px;
+  gap: var(--space-5);
   align-items: center;
 }
 
 .question-count {
   font-size: 1.1rem;
-  color: #9b8f7f;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
 .timer {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #81b64c;
+  color: var(--accent);
   min-width: 50px;
   text-align: center;
 }
 
 .timer.warning {
-  color: #c0392b;
+  color: var(--danger);
   animation: pulse-warning 0.5s ease infinite;
 }
 
@@ -249,47 +201,47 @@
 
 .practice-stats {
   font-size: 1.1rem;
-  color: #9b8f7f;
+  color: var(--text-muted);
 }
 
 .target-square {
   display: flex;
   align-items: center;
-  gap: 15px;
-  background: #262626;
-  border: 1px solid #3d3d3d;
-  border-left: 3px solid #81b64c;
-  padding: 15px 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  gap: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: var(--space-4) 30px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .target-label {
   font-size: 1.2rem;
-  color: #9b8f7f;
+  color: var(--text-muted);
 }
 
 .target-value {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #f0d9b5;
-  font-family: 'Courier New', monospace;
+  color: var(--text);
+  font-family: var(--font-mono);
   letter-spacing: 2px;
 }
 
 .perspective-indicator {
   font-size: 0.95rem;
-  color: #6b6b6b;
+  color: var(--text-faint);
 }
 
 .game-board {
-  margin-bottom: 15px;
+  margin-bottom: var(--space-4);
 }
 
 /* Feedback */
 .feedback {
-  padding: 15px 30px;
-  border-radius: 8px;
+  padding: var(--space-4) 30px;
+  border-radius: var(--radius-md);
   font-size: 1.2rem;
   font-weight: 600;
   animation: slide-up 0.3s ease;
@@ -307,35 +259,35 @@
 }
 
 .feedback.correct {
-  background: rgba(129, 182, 76, 0.15);
-  color: #81b64c;
-  border: 1px solid rgba(129, 182, 76, 0.3);
+  background: color-mix(in srgb, var(--success) 15%, transparent);
+  color: var(--success);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
 }
 
 .feedback.wrong, .feedback.timeout {
-  background: rgba(192, 57, 43, 0.15);
-  color: #e74c3c;
-  border: 1px solid rgba(192, 57, 43, 0.3);
+  background: color-mix(in srgb, var(--danger) 15%, transparent);
+  color: var(--danger-text);
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
 }
 
 /* Results */
 .results {
-  background: #262626;
-  border-radius: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
   padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lg);
   width: 100%;
   max-width: 400px;
   margin-bottom: 30px;
-  border: 1px solid #3d3d3d;
+  border: 1px solid var(--border);
 }
 
 .results.passed {
-  border: 2px solid #81b64c;
+  border: 2px solid var(--success);
 }
 
 .results.failed {
-  border: 2px solid #e8a039;
+  border: 2px solid var(--warning);
 }
 
 .result-main {
@@ -347,27 +299,27 @@
 
 .result-icon {
   font-size: 3rem;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-3);
 }
 
 .result-accuracy {
   font-size: 4rem;
   font-weight: 700;
-  color: #f0d9b5;
+  color: var(--text);
   line-height: 1;
 }
 
 .result-label {
   font-size: 1.1rem;
-  color: #6b6b6b;
+  color: var(--text-faint);
   margin-top: 5px;
 }
 
 .result-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
 .stat {
@@ -380,18 +332,18 @@
 .stat-value {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #f0d9b5;
+  color: var(--text);
 }
 
 .stat-label {
   font-size: 0.8rem;
-  color: #6b6b6b;
+  color: var(--text-faint);
 }
 
 .result-message {
   text-align: center;
   font-size: 1.1rem;
-  color: #9b8f7f;
-  padding-top: 15px;
-  border-top: 1px solid #3d3d3d;
+  color: var(--text-muted);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
 }

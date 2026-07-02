@@ -1,0 +1,134 @@
+/* Design tokens — chess-app.
+   Part of the shared wilbergr.github.io app family (guitar-app / piano-app):
+   the neutral surface scale, spacing, radii, typography, shadows and status
+   colors mirror guitar-app/src/styles/tokens.css so the apps read as one family.
+   The ONE deliberate divergence is the accent: chess keeps its lichess-style
+   GREEN (+ amber secondary) instead of guitar's copper — see --accent below.
+
+   Dark is the default (:root). Light is applied either explicitly via
+   [data-theme="light"] (reserved for a future theme toggle — chess-app has no
+   toggle yet, mirroring piano-app) or, pre-JS, via the OS preference
+   (@media prefers-color-scheme: light scoped to :root:not([data-theme])). */
+
+:root {
+  /* Color — surfaces & text (shared family neutrals) */
+  --bg: #0d1014;
+  --surface: #161a20;
+  --surface-2: #1d222a;
+  --border: #262c36;
+  /* Slightly brighter border for hover/emphasis (was the ad-hoc #4d4d4d). */
+  --border-strong: #333c48;
+  --text: #f4f4f6;
+  --text-muted: #a1a8b3;
+  --text-faint: #6b7280;
+
+  /* Color — accent (chess GREEN — the family divergence) + status.
+     --accent-hi is the DARKER pressed/hover green (chess convention differs from
+     guitar, whose accent-hi is brighter). --on-accent is text/icons on a green
+     fill (e.g. primary buttons): near-black in dark theme. */
+  --accent: #81b64c;
+  --accent-hi: #6fa03e;
+  --accent-bg: rgba(129, 182, 76, 0.12);
+  --on-accent: #10230a;
+  /* Success shares the brand green — in chess a "correct" answer IS green. */
+  --success: #81b64c;
+  /* Amber secondary — retained from the chess palette (challenge mode, hints,
+     "failed" review, selected-square highlight). */
+  --warning: #e8a039;
+  /* Danger red. --danger-hi is the darker button-hover; --danger-text is the
+     brighter red used for text/icons sitting on a translucent danger tint. */
+  --danger: #c0392b;
+  --danger-hi: #a93226;
+  --danger-text: #e74c3c;
+
+  /* Chessboard — intrinsic object colors. These are real board surfaces (light
+     parchment / dark wood squares + coordinate ink) and must NOT flip with the
+     theme, so there is deliberately no light override for them below. */
+  --board-light: #f0d9b5;
+  --board-dark: #b58863;
+  --board-coord-on-light: rgba(101, 68, 45, 0.7);
+  --board-coord-on-dark: rgba(240, 217, 181, 0.7);
+
+  /* Radius (shared scale) */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 9999px;
+
+  /* Spacing — strict 4px scale (shared) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Shadow */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.55);
+
+  /* Focus ring helper */
+  --ring: 0 0 0 2px var(--accent), 0 0 0 4px var(--bg);
+
+  /* Typography — system stacks, structured as family tokens. Georgia serif is
+     the chess move-notation display face. */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: 'Georgia', 'Times New Roman', serif;
+}
+
+/* Light theme overrides. Shared by the (future) explicit toggle and the pre-JS
+   OS-preference fallback below. Accent/status are darkened so text/borders on
+   light surfaces meet WCAG AA. Board tokens intentionally stay as the dark
+   defaults — the board is a real object, same colors in both themes. */
+[data-theme="light"] {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --surface-2: #f1eee9;
+  --border: #d8d1c5;
+  --border-strong: #c4bba9;
+  --text: #1a1a1f;
+  --text-muted: #4a5361;
+  --text-faint: #6b7280;
+  --accent: #4e7d2e;
+  --accent-hi: #416a26;
+  --accent-bg: rgba(78, 125, 46, 0.14);
+  --on-accent: #ffffff;
+  --success: #2f7d32;
+  --warning: #b45309;
+  --danger: #b3271b;
+  --danger-hi: #8f1f16;
+  --danger-text: #a52318;
+  --shadow-sm: 0 2px 8px rgba(60, 50, 40, 0.12);
+  --shadow-md: 0 4px 16px rgba(60, 50, 40, 0.15);
+  --shadow-lg: 0 8px 24px rgba(60, 50, 40, 0.18);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --surface-2: #f1eee9;
+    --border: #d8d1c5;
+    --border-strong: #c4bba9;
+    --text: #1a1a1f;
+    --text-muted: #4a5361;
+    --text-faint: #6b7280;
+    --accent: #4e7d2e;
+    --accent-hi: #416a26;
+    --accent-bg: rgba(78, 125, 46, 0.14);
+    --on-accent: #ffffff;
+    --success: #2f7d32;
+    --warning: #b45309;
+    --danger: #b3271b;
+    --danger-hi: #8f1f16;
+    --danger-text: #a52318;
+    --shadow-sm: 0 2px 8px rgba(60, 50, 40, 0.12);
+    --shadow-md: 0 4px 16px rgba(60, 50, 40, 0.15);
+    --shadow-lg: 0 8px 24px rgba(60, 50, 40, 0.18);
+  }
+}

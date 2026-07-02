@@ -271,7 +271,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
           </div>
         </div>
 
-        <button className="back-button" onClick={onBack}>
+        <button className="btn btn-ghost back-button" onClick={onBack}>
           ← Back to Menu
         </button>
       </div>
@@ -291,7 +291,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
               {Object.entries(DIFFICULTY_SETTINGS).map(([key, { label }]) => (
                 <button
                   key={key}
-                  className={`option-button ${difficulty === key ? 'selected' : ''}`}
+                  className={`btn btn-secondary option-button ${difficulty === key ? 'selected' : ''}`}
                   onClick={() => setDifficulty(key)}
                 >
                   {label}
@@ -310,19 +310,19 @@ const NotationChallenge = ({ onComplete, onBack }) => {
               <label>Board Perspective</label>
               <div className="option-buttons">
                 <button
-                  className={`option-button ${perspective === 'white' ? 'selected' : ''}`}
+                  className={`btn btn-secondary option-button ${perspective === 'white' ? 'selected' : ''}`}
                   onClick={() => setPerspective('white')}
                 >
                   White
                 </button>
                 <button
-                  className={`option-button ${perspective === 'black' ? 'selected' : ''}`}
+                  className={`btn btn-secondary option-button ${perspective === 'black' ? 'selected' : ''}`}
                   onClick={() => setPerspective('black')}
                 >
                   Black
                 </button>
                 <button
-                  className={`option-button ${perspective === 'both' ? 'selected' : ''}`}
+                  className={`btn btn-secondary option-button ${perspective === 'both' ? 'selected' : ''}`}
                   onClick={() => setPerspective('both')}
                 >
                   Both
@@ -339,10 +339,10 @@ const NotationChallenge = ({ onComplete, onBack }) => {
         </div>
 
         <div className="action-buttons">
-          <button className="start-button" onClick={startGame}>
+          <button className="btn btn-primary start-button" onClick={startGame}>
             Start {mode === 'practice' ? 'Practice' : 'Challenge'}
           </button>
-          <button className="back-button" onClick={() => setMode(null)}>
+          <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
             ← Change Mode
           </button>
         </div>
@@ -397,10 +397,10 @@ const NotationChallenge = ({ onComplete, onBack }) => {
         </div>
 
         <div className="action-buttons">
-          <button className="start-button" onClick={startGame}>
+          <button className="btn btn-primary start-button" onClick={startGame}>
             Try Again
           </button>
-          <button className="back-button" onClick={() => setMode(null)}>
+          <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
             ← Change Settings
           </button>
         </div>
@@ -475,11 +475,11 @@ const NotationChallenge = ({ onComplete, onBack }) => {
         {mode === 'practice' && !feedback && (
           <>
             {!showHint && (
-              <button className="hint-button" onClick={handleHint}>
+              <button className="btn hint-button" onClick={handleHint}>
                 💡 Show Hint
               </button>
             )}
-            <button className="skip-button" onClick={handleSkip}>
+            <button className="btn btn-secondary skip-button" onClick={handleSkip}>
               Skip →
             </button>
           </>
@@ -495,7 +495,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
               />
               Show coordinates
             </label>
-            <button className="stop-button" onClick={() => setMode(null)}>
+            <button className="btn btn-danger stop-button" onClick={() => setMode(null)}>
               End Practice
             </button>
           </>
