@@ -1,7 +1,19 @@
+/* --board-size is the single source of truth for board dimensions (board grid,
+   rank/file label tracks, and the blindfold placeholder in GameChallenge.css).
+   It fills the viewport width minus fixed chrome (page padding + the 12px rank
+   label column + gap), caps at 480px, and is height-capped so the board never
+   exceeds the screen (85dvh leaves room for the header/controls to peek).
+   The chrome allowance is a constant (not :has(.rank-labels)-dependent) so the
+   board doesn't resize when coordinate labels are toggled mid-game. */
+:root {
+  /* 64px = 2 × 24px max page padding + 12px rank column + 4px gap */
+  --board-size: min(calc(100vw - 64px), 480px, 85dvh);
+}
+
 .chess-board-container {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-2);
+  gap: var(--space-1);
   user-select: none;
 }
 
@@ -9,18 +21,19 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: min(70vw, 480px);
-  padding: 0 var(--space-1);
+  height: var(--board-size);
+  width: 12px;
+  flex-shrink: 0;
 }
 
 .rank-label {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
-  height: calc(min(70vw, 480px) / 8);
+  height: calc(var(--board-size) / 8);
 }
 
 .board-and-files {
@@ -32,8 +45,8 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  width: min(70vw, 480px);
-  height: min(70vw, 480px);
+  width: var(--board-size);
+  height: var(--board-size);
   border: 3px solid var(--bg);
   border-radius: var(--radius-xs);
   overflow: hidden;
@@ -43,7 +56,7 @@
 .file-labels {
   display: flex;
   justify-content: space-around;
-  width: min(70vw, 480px);
+  width: var(--board-size);
   padding: var(--space-1) 0;
 }
 
@@ -51,10 +64,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
-  width: calc(min(70vw, 480px) / 8);
+  width: calc(var(--board-size) / 8);
+}
+
+@media (max-width: 500px) {
+  :root {
+    /* 32px = 2 × 8px mobile page padding + 12px rank column + 4px gap.
+       At 390px viewport this yields a 358px board → ~44.8px squares. */
+    --board-size: min(calc(100vw - 32px), 480px, 85dvh);
+  }
 }
 
 .square {

@@ -347,3 +347,61 @@
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
 }
+
+/* Mobile (≤500px): tighter page padding so the board fills the width (see
+   --board-size in ChessBoard.css), stacked mode cards, compact header/type. */
+@media (max-width: 500px) {
+  .square-challenge {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .square-challenge h2 {
+    font-size: 1.5rem;
+  }
+
+  .square-challenge.playing {
+    padding: var(--space-3) var(--space-2);
+  }
+
+  .mode-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .mode-button {
+    min-width: 0;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .game-header {
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .game-info {
+    gap: var(--space-4);
+  }
+
+  .target-square {
+    padding: var(--space-3) var(--space-5);
+  }
+
+  .target-value {
+    font-size: 2rem;
+  }
+
+  .feedback {
+    padding: var(--space-3) var(--space-5);
+    font-size: 1.05rem;
+    text-align: center;
+  }
+
+  .results {
+    padding: var(--space-5);
+  }
+
+  .result-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

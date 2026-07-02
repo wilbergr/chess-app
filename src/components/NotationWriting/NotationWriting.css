@@ -6,6 +6,7 @@
   max-width: 600px;
   margin: 0 auto;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
 }
 
@@ -523,9 +524,72 @@
   border-top: 1px solid var(--border);
 }
 
+/* Mobile (≤500px): tighter page padding so the board fills the width (see
+   --board-size in ChessBoard.css), stacked mode cards, compact header/type. */
 @media (max-width: 500px) {
+  .notation-writing {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .notation-writing h2 {
+    font-size: 1.5rem;
+  }
+
+  .notation-writing.playing {
+    padding: var(--space-3) var(--space-2);
+  }
+
+  .mode-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .mode-button {
+    min-width: 0;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .game-header {
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .game-info {
+    gap: var(--space-4);
+  }
+
+  .prompt {
+    padding: var(--space-3) var(--space-4);
+    text-align: center;
+  }
+
+  .move-hint {
+    font-size: 1.1rem;
+  }
+
+  .input-form {
+    max-width: none;
+  }
+
+  .notation-input {
+    font-size: 1.3rem;
+    padding: var(--space-3) var(--space-4);
+    min-width: 0;
+  }
+
+  .feedback {
+    padding: var(--space-3) var(--space-5);
+    font-size: 1.05rem;
+    text-align: center;
+  }
+
   .notation-examples {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .results {
+    padding: var(--space-5);
   }
 
   .result-stats {

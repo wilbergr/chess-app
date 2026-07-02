@@ -42,3 +42,32 @@ adds the amber tint on top of `.btn`). Selectable pills (`.option-button`,
 state has a `:hover` twin so it isn't overridden by `.btn-secondary:hover` (higher
 specificity). Cards (`.mode-button`, `.difficulty-card`, `.game-card`, `.challenge-card`,
 `.difficulty-option`) are NOT `.btn` — they stay column-layout tokenized surfaces.
+
+## Responsive layout & board sizing (PR2)
+
+**`--board-size` is the single source of truth for board dimensions**, defined on `:root`
+in `src/components/ChessBoard/ChessBoard.css` and consumed by the board grid, rank/file
+label tracks, and the blindfold placeholder in `GameChallenge.css`. Never hardcode
+`min(70vw, 480px)`-style board math again — change the one variable.
+
+The formula is `min(calc(100vw - <chrome>), 480px, 85dvh)` where `<chrome>` is a
+**constant allowance** for page padding + the 12px rank-label column + 4px container gap:
+64px on desktop (2×24px max page padding), 32px under the 500px breakpoint (2×8px playing
+padding). It is deliberately NOT `:has(.rank-labels)`-dependent so the board doesn't
+resize when the "Show coordinates" toggle flips mid-game. The `85dvh` term caps the board
+on landscape phones / short windows. If you change any playing-screen horizontal padding
+or the label column width, the allowance must be updated to match — at 390px the current
+math yields a 358px board = exactly 44px squares (the touch-target floor).
+
+**Breakpoint convention:** one mobile breakpoint, `@media (max-width: 500px)`, used in
+every component stylesheet. Mobile blocks: playing screens drop to `--space-2` horizontal
+padding (part of the board-size contract above), `.mode-buttons` stack vertically,
+`.result-stats` go 2-column, headline type steps down. `.game-info-bar` (GameChallenge)
+wraps + centers on mobile so title/progress/timer never overflow.
+
+**Touch targets:** everything interactive is ≥44px — `.btn*` enforce it; `.coords-toggle`
+(checkbox label in `index.css`) carries its own `min-height: 44px` since it's not a `.btn`.
+
+**Viewport units / safe area:** `min-height` uses the `100vh` + `100dvh` double-declaration
+pattern (dvh wins where supported). `.app` pads with `env(safe-area-inset-left/right)`;
+`viewport-fit=cover` is set in `index.html` — don't remove it or the insets go dead.

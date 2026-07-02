@@ -22,11 +22,13 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--bg);
 }
 
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 a {
@@ -129,6 +131,9 @@ a:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  /* The whole label is the touch target — keep it >=44px like the .btn system. */
+  min-height: 44px;
+  padding: 0 var(--space-2);
   font-size: 14px;
   cursor: pointer;
   user-select: none;
@@ -137,8 +142,8 @@ a:focus-visible {
 
 .coords-toggle input[type="checkbox"] {
   cursor: pointer;
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   accent-color: var(--accent);
 }
 
