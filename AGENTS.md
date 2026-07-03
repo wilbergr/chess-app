@@ -25,9 +25,15 @@ in chess a *correct* answer is green), `--warning` (amber `#e8a039` — challeng
 (parchment), `--board-dark` (wood), `--board-coord-on-light/on-dark`. They are defined only
 in `:root` (no light override) so the board reads the same in both themes.
 
-**Themes:** dark is `:root` default; light applies via `@media (prefers-color-scheme: light)`
-(and a reserved `[data-theme="light"]` block for a future toggle — chess-app has no theme
-toggle yet, mirroring piano-app). The light accent is darkened to `#4e7d2e` for WCAG AA.
+**Themes (PR5):** dark is `:root` default; light applies via `[data-theme="light"]` on
+`<html>`, set by `src/hooks/useTheme.js` — a verbatim port of guitar-app's hook with
+storage key **`chess-theme`**. Persisted localStorage choice wins; unset falls back to
+`prefers-color-scheme` (the `@media` block in tokens.css scoped to
+`:root:not([data-theme])` covers pre-JS paint) and tracks OS changes until the user
+toggles. The Sun/Moon toggle lives in `App.jsx` (chess has no header bar, so
+`.theme-toggle-btn` in `App.css` floats it fixed top-right, safe-area aware); it composes
+`.btn .btn-secondary .btn-icon` and carries `aria-label`/`title` — same classes/labels as
+guitar's for family parity. The light accent is darkened to `#4e7d2e` for WCAG AA.
 Translucent tints (subtle green/amber/red fills & borders) use
 `color-mix(in srgb, var(--token) N%, transparent)` inline rather than one-off rgba tokens.
 
