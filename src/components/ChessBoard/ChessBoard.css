@@ -213,3 +213,43 @@
 .square.dark .coordinate {
   color: var(--board-coord-on-dark);
 }
+
+/* --- Drag-and-drop (draggable boards only) --- */
+
+/* touch-action: none on occupied squares lets a touch drag start on a piece
+   without the browser claiming the pointer for scrolling; empty squares keep
+   default touch behavior so the page still scrolls from them. */
+.chess-board.draggable .square.occupied {
+  touch-action: none;
+  cursor: grab;
+}
+
+.chess-board.dragging .square {
+  cursor: grabbing;
+}
+
+/* The piece stays on its source square at reduced opacity while its ghost
+   follows the pointer — cancelling a drag just re-solidifies it in place. */
+.square.drag-origin .piece {
+  opacity: 0.35;
+}
+
+/* Legal square currently under the dragged piece: the strongest two-tone
+   ring (accent + intrinsic --board-ink) so it reads without color perception.
+   Declared after .highlighted so it wins on shared squares. */
+.square.drag-over {
+  background-color: color-mix(in srgb, var(--accent) 70%, transparent) !important;
+  box-shadow:
+    inset 0 0 0 3px var(--accent),
+    inset 0 0 0 6px var(--board-ink);
+}
+
+/* Floating copy of the dragged piece; its transform is driven from pointer
+   coordinates (position: fixed, so board overflow never clips it). */
+.drag-ghost {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  pointer-events: none;
+}
