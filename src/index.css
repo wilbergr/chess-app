@@ -151,7 +151,7 @@ textarea:focus-visible,
 .btn-danger {
   background: var(--danger);
   border-color: var(--danger);
-  color: #fff;
+  color: var(--on-danger);
 }
 
 .btn-danger:hover:not(:disabled) {

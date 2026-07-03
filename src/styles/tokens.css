@@ -6,9 +6,10 @@
    GREEN (+ amber secondary) instead of guitar's copper — see --accent below.
 
    Dark is the default (:root). Light is applied either explicitly via
-   [data-theme="light"] (reserved for a future theme toggle — chess-app has no
-   toggle yet, mirroring piano-app) or, pre-JS, via the OS preference
-   (@media prefers-color-scheme: light scoped to :root:not([data-theme])). */
+   [data-theme="light"] — set by the useTheme hook behind the header Sun/Moon
+   toggle (persisted to localStorage "chess-theme") — or, pre-JS, via the OS
+   preference (@media prefers-color-scheme: light scoped to
+   :root:not([data-theme])). */
 
 :root {
   /* Color — surfaces & text (shared family neutrals) */
@@ -90,8 +91,8 @@
   --font-serif: 'Georgia', 'Times New Roman', serif;
 }
 
-/* Light theme overrides. Shared by the (future) explicit toggle and the pre-JS
-   OS-preference fallback below. Accent/status are darkened so text/borders on
+/* Light theme overrides. Shared by the explicit toggle (useTheme) and the
+   pre-JS OS-preference fallback below. Accent/status are darkened so text/borders on
    light surfaces meet WCAG AA. Board tokens intentionally stay as the dark
    defaults — the board is a real object, same colors in both themes. */
 [data-theme="light"] {
