@@ -18,6 +18,8 @@ const Square = ({
   isSelected,
   isCorrect,
   isWrong,
+  isDragOrigin,
+  isDragOver,
   showCoordinate,
   onClick,
   onKeyNav,
@@ -29,6 +31,8 @@ const Square = ({
   if (isSelected) className += ' selected'
   if (isCorrect) className += ' correct'
   if (isWrong) className += ' wrong'
+  if (isDragOrigin) className += ' drag-origin'
+  if (isDragOver) className += ' drag-over'
   if (piece) className += ' occupied'
 
   // Determine piece color from piece character (uppercase = white, lowercase = black)

@@ -717,6 +717,7 @@ const GameChallenge = ({ onBack }) => {
           highlightedSquares={validMoves}
           onSquareClick={handleSquareClick}
           showLabels={mode === 'challenge' && difficulty === 'advanced' ? false : showCoords}
+          draggable
         />
       </div>
 

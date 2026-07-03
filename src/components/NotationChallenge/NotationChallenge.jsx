@@ -509,6 +509,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
           wrongSquare={feedback?.type === 'wrong' ? selectedSquare : null}
           onSquareClick={handleSquareClick}
           showLabels={mode === 'challenge' && difficulty === 'hard' ? false : showCoords}
+          draggable
         />
       </div>
 

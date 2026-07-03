@@ -133,3 +133,41 @@ clear 4.5:1 on all three surfaces in each theme; don't lower them. Warning-state
 (the selector screen has the visible h1); challenge screens start at h2. Selectable pills
 carry `aria-pressed`; decorative SVGs/icons are `aria-hidden`; the board's external
 rank/file label strips are `aria-hidden` (squares already announce coordinates).
+
+## Board interaction — THREE co-existing input paths (PR5)
+
+Move-input boards (GameChallenge, NotationChallenge — the ones that pass `draggable` to
+`ChessBoard`) support **click-click**, **keyboard** (PR4 roving tabindex + Enter/Space),
+and **press-and-hold drag** (Pointer Events, mouse + touch). All three funnel into the
+consumer's single `onSquareClick(square)` handler — **never add a parallel input path
+that validates or applies moves itself.**
+
+**Drag is a synthesizer, not a second rules engine.** It lives entirely in
+`ChessBoard.jsx`: crossing a 6px threshold (`DRAG_THRESHOLD`) lifts the piece and
+synthesizes `onSquareClick(source)` (the consumer's own select branch lights the
+valid-move highlights); dropping on a legal target synthesizes `onSquareClick(target)`
+(same validate/apply/announce path as a click, so live-region announcements come for
+free). Sub-threshold presses fall through to the native `click` event = click-to-move
+untouched. Drop legality and liftability use the same shared
+`canMoveFrom`/`getValidMovesFrom` (`services/notationGenerator.js`) the consumers use.
+
+**Selection coherence rules:** drop-on-source keeps the piece selected (matches a plain
+click's select); a cancelled drag (off-board/illegal) deselects only if the drag itself
+created the selection (`wasSelected` flag) — a pre-existing selection survives untouched.
+After a completed drag, the browser's trailing `click` on the source square is swallowed
+via a one-shot `suppressClickRef` (cleared on a 0ms timeout for browsers that don't fire
+it). A drag records its lift-time `fen`; if the FEN changes mid-drag (opponent auto-play)
+the drag goes inert (`liveDrag` derivation) and never synthesizes a drop.
+
+**Mechanics:** handlers are delegated on the `.chess-board` div, but `setPointerCapture`
+targets the **source square element** — capturing on the board would retarget `click` and
+break click-to-move. Ghost piece (`.drag-ghost`, `position: fixed`, `aria-hidden`) is
+positioned via direct DOM `transform` writes after first paint so 60hz pointermove doesn't
+re-render 64 squares. `touch-action: none` only on `.draggable .square.occupied` — drags
+start on pieces, empty squares still scroll the page. Drag-state CSS: `.drag-origin`
+(source piece dims to 0.35), `.drag-over` (legal square under pointer: accent +
+`--board-ink` two-tone ring, declared after `.highlighted` so it wins).
+
+**Promotion is auto-queen** (`promotion: 'q'` hardcoded in GameChallenge's
+`handleSquareClick`); drag inherits this. If a promotion picker is ever added, put it in
+the consumer's click handler so all three input paths get it.
