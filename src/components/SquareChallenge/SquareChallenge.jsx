@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import ChessBoard from '../ChessBoard/ChessBoard'
 import PerformanceTracker from '../../services/performanceTracker'
+import { announce } from '../../services/announcer'
 import './SquareChallenge.css'
 
 const FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -84,6 +85,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
     setCurrentSquare(newSquare)
     setFeedback(null)
     setQuestionNumber((prev) => prev + 1)
+    announce(`Find ${newSquare}`)
 
     // Determine perspective for this question
     let questionPerspective
@@ -116,9 +118,11 @@ const SquareChallenge = ({ onComplete, onBack }) => {
               timedOut: true,
             })
             setFeedback({ type: 'timeout', square: newSquare })
+            announce(`Time's up! It was ${newSquare}`)
             setTimeout(() => nextQuestion(), 1000)
             return 0
           }
+          if (prev === 4) announce('3 seconds left')
           return prev - 1
         })
       }, 1000)
@@ -150,6 +154,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
         square: clickedSquare,
         correctSquare: currentSquare,
       })
+      announce(isCorrect ? 'Correct!' : `Wrong! It was ${currentSquare}`)
 
       // Move to next question after delay
       setTimeout(() => {
@@ -195,7 +200,17 @@ const SquareChallenge = ({ onComplete, onBack }) => {
     setQuestionNumber(0)
     setCurrentSquare(null)
     setFeedback(null)
+    if (mode) announce(mode === 'practice' ? 'Practice mode' : 'Challenge mode')
   }, [mode])
+
+  // Announce results (they only appear visually)
+  useEffect(() => {
+    if (showResults && results) {
+      announce(
+        `Challenge complete. ${results.accuracy} percent accuracy, ${results.correct} correct, ${results.incorrect} incorrect. ${results.passed ? 'Passed!' : 'Not passed.'}`
+      )
+    }
+  }, [showResults, results])
 
   // Mode selection screen
   if (!mode) {
@@ -244,6 +259,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
                   <button
                     key={key}
                     className={`btn btn-secondary option-button ${difficulty === key ? 'selected' : ''}`}
+                    aria-pressed={difficulty === key}
                     onClick={() => setDifficulty(key)}
                   >
                     {label}
@@ -259,18 +275,21 @@ const SquareChallenge = ({ onComplete, onBack }) => {
               <div className="option-buttons">
                 <button
                   className={`btn btn-secondary option-button ${perspective === 'white' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'white'}
                   onClick={() => setPerspective('white')}
                 >
                   White
                 </button>
                 <button
                   className={`btn btn-secondary option-button ${perspective === 'black' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'black'}
                   onClick={() => setPerspective('black')}
                 >
                   Black
                 </button>
                 <button
                   className={`btn btn-secondary option-button ${perspective === 'both' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'both'}
                   onClick={() => setPerspective('both')}
                 >
                   Both

@@ -14,7 +14,17 @@ import {
 import { Chess } from 'chess.js'
 import ChessBoard from '../ChessBoard/ChessBoard'
 import PerformanceTracker from '../../services/performanceTracker'
+import { announce } from '../../services/announcer'
 import './NotationWriting.css'
+
+const PIECE_NAMES = {
+  p: 'pawn',
+  n: 'knight',
+  b: 'bishop',
+  r: 'rook',
+  q: 'queen',
+  k: 'king',
+}
 
 // Positions for generating moves at different difficulty levels
 const PRACTICE_POSITIONS = [
@@ -191,6 +201,9 @@ const NotationWriting = ({ onBack }) => {
     setFeedback(null)
     setShowHint(false)
     setQuestionNumber((prev) => prev + 1)
+    announce(
+      `Write the notation: ${challenge.turn} ${PIECE_NAMES[challenge.piece]} from ${challenge.from} to ${challenge.to}`
+    )
 
     trackerRef.current.startAttempt()
 
@@ -216,9 +229,11 @@ const NotationWriting = ({ onBack }) => {
               type: 'timeout',
               message: `Time's up! The answer was: ${challenge.san}`,
             })
+            announce(`Time's up! The answer was ${challenge.san}`)
             setTimeout(() => nextQuestion(), 1500)
             return 0
           }
+          if (prev === 4) announce('3 seconds left')
           return prev - 1
         })
       }, 1000)
@@ -255,12 +270,14 @@ const NotationWriting = ({ onBack }) => {
 
     if (isCorrect) {
       setFeedback({ type: 'correct', message: 'Correct!' })
+      announce('Correct!')
       setTimeout(() => nextQuestion(), 600)
     } else {
       setFeedback({
         type: 'wrong',
         message: `Wrong! The correct notation is: ${expectedSan}`,
       })
+      announce(`Wrong! The correct notation is ${expectedSan}`)
 
       if (mode === 'challenge') {
         setTimeout(() => nextQuestion(), 1500)
@@ -316,7 +333,17 @@ const NotationWriting = ({ onBack }) => {
     setIsPlaying(false)
     setShowResults(false)
     setQuestionNumber(0)
+    if (mode) announce(mode === 'practice' ? 'Practice mode' : 'Challenge mode')
   }, [mode, difficulty, clearTimer])
+
+  // Announce results (they only appear visually)
+  useEffect(() => {
+    if (showResults && results) {
+      announce(
+        `Challenge complete. ${results.accuracy} percent accuracy, ${results.correct} correct, ${results.incorrect} wrong. ${results.passed ? 'Passed!' : 'Not passed.'}`
+      )
+    }
+  }, [showResults, results])
 
   // Mode selection
   if (!mode) {
@@ -365,6 +392,7 @@ const NotationWriting = ({ onBack }) => {
                 <button
                   key={key}
                   className={`difficulty-option ${difficulty === key ? 'selected' : ''}`}
+                  aria-pressed={difficulty === key}
                   onClick={() => setDifficulty(key)}
                 >
                   <span className="diff-label">{value.label}</span>
@@ -380,18 +408,21 @@ const NotationWriting = ({ onBack }) => {
               <div className="perspective-options">
                 <button
                   className={`btn btn-secondary perspective-option ${perspective === 'white' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'white'}
                   onClick={() => setPerspective('white')}
                 >
                   White
                 </button>
                 <button
                   className={`btn btn-secondary perspective-option ${perspective === 'black' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'black'}
                   onClick={() => setPerspective('black')}
                 >
                   Black
                 </button>
                 <button
                   className={`btn btn-secondary perspective-option ${perspective === 'both' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'both'}
                   onClick={() => setPerspective('both')}
                 >
                   Both
@@ -406,7 +437,7 @@ const NotationWriting = ({ onBack }) => {
         </div>
 
         <div className="notation-help">
-          <h4>Notation Quick Reference</h4>
+          <h3>Notation Quick Reference</h3>
           <div className="notation-examples">
             <div className="example">
               <span className="notation">e4</span>
@@ -561,6 +592,7 @@ const NotationWriting = ({ onBack }) => {
           highlightedSquares={[currentMove?.from, currentMove?.to].filter(Boolean)}
           selectedSquare={currentMove?.from}
           showLabels={mode === 'challenge' && difficulty === 'advanced' ? false : showCoords}
+          interactive={false}
         />
       </div>
 
@@ -571,6 +603,7 @@ const NotationWriting = ({ onBack }) => {
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Type notation (e.g., Nf3)"
+          aria-label="Move notation"
           className={`notation-input ${feedback?.type || ''}`}
           disabled={!!feedback}
           autoComplete="off"

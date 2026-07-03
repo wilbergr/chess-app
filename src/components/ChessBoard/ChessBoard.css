@@ -99,14 +99,44 @@
   filter: brightness(1.08);
 }
 
+/* Inset ring — the board clips overflow, and the intrinsic --board-ink stays
+   >=6:1 on both square colors where the theme accent can drop below 2:1. */
+.square:focus-visible {
+  outline: 3px solid var(--board-ink);
+  outline-offset: -3px;
+}
+
+/* Square states each pair the color fill with a non-color cue so they read
+   without color perception: highlighted = ring + center dot (ring only when
+   occupied, keeping the piece visible), selected = two-tone ring,
+   correct/wrong = drawn check / X glyph. */
 .square.highlighted {
   background-color: color-mix(in srgb, var(--accent) 70%, transparent) !important;
   box-shadow: inset 0 0 0 3px var(--accent);
 }
 
+.square.highlighted::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--board-ink) 45%, transparent);
+  pointer-events: none;
+}
+
+.square.highlighted.occupied::after {
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  background: transparent;
+  border: 4px solid color-mix(in srgb, var(--board-ink) 45%, transparent);
+}
+
 .square.selected {
   background-color: color-mix(in srgb, var(--warning) 70%, transparent) !important;
-  box-shadow: inset 0 0 0 3px var(--warning);
+  box-shadow:
+    inset 0 0 0 3px var(--warning),
+    inset 0 0 0 5px var(--board-ink);
 }
 
 .square.correct {
@@ -114,9 +144,40 @@
   animation: pulse-correct 0.5s ease;
 }
 
+.square.correct::after {
+  content: '';
+  position: absolute;
+  width: 22%;
+  height: 42%;
+  margin-bottom: 12%;
+  border-right: 4px solid var(--on-accent);
+  border-bottom: 4px solid var(--on-accent);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
 .square.wrong {
   background-color: var(--danger) !important;
   animation: shake 0.3s ease;
+}
+
+.square.wrong::before,
+.square.wrong::after {
+  content: '';
+  position: absolute;
+  width: 55%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--on-danger);
+  pointer-events: none;
+}
+
+.square.wrong::before {
+  transform: rotate(45deg);
+}
+
+.square.wrong::after {
+  transform: rotate(-45deg);
 }
 
 @keyframes pulse-correct {

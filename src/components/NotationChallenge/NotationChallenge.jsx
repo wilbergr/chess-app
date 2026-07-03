@@ -18,6 +18,7 @@ import {
   getValidMovesFrom,
   canMoveFrom,
 } from '../../services/notationGenerator'
+import { announce } from '../../services/announcer'
 import './NotationChallenge.css'
 
 const DIFFICULTY_SETTINGS = {
@@ -101,6 +102,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
     setFeedback(null)
     setShowHint(false)
     setQuestionNumber((prev) => prev + 1)
+    announce(`Play ${newChallenge.san}, ${newChallenge.turn} to move`)
 
     // Start attempt timer
     trackerRef.current.startAttempt()
@@ -125,9 +127,11 @@ const NotationChallenge = ({ onComplete, onBack }) => {
               correctFrom: newChallenge.from,
               correctTo: newChallenge.to,
             })
+            announce(`Time's up! The answer was ${newChallenge.san}`)
             setTimeout(() => nextChallenge(), 1500)
             return 0
           }
+          if (prev === 4) announce('3 seconds left')
           return prev - 1
         })
       }, 1000)
@@ -187,6 +191,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
           type: 'correct',
           message: 'Correct!',
         })
+        announce('Correct!')
       } else {
         setFeedback({
           type: 'wrong',
@@ -194,6 +199,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
           correctFrom: challenge.from,
           correctTo: challenge.to,
         })
+        announce(`Wrong! The correct move was ${challenge.from} to ${challenge.to}`)
       }
 
       setSelectedSquare(null)
@@ -210,6 +216,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
   // Handle hint button
   const handleHint = () => {
     setShowHint(true)
+    if (challenge) announce(`Hint: move from ${challenge.from} to ${challenge.to}`)
   }
 
   // Handle skip button (practice mode only)
@@ -255,7 +262,17 @@ const NotationChallenge = ({ onComplete, onBack }) => {
     setFeedback(null)
     setSelectedSquare(null)
     setValidMoves([])
+    if (mode) announce(mode === 'practice' ? 'Practice mode' : 'Challenge mode')
   }, [mode])
+
+  // Announce results (they only appear visually)
+  useEffect(() => {
+    if (showResults && results) {
+      announce(
+        `Challenge complete. ${results.accuracy} percent accuracy, ${results.correct} correct, ${results.incorrect} incorrect. ${results.passed ? 'Passed!' : 'Not passed.'}`
+      )
+    }
+  }, [showResults, results])
 
   // Mode selection screen
   if (!mode) {
@@ -304,6 +321,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
                 <button
                   key={key}
                   className={`btn btn-secondary option-button ${difficulty === key ? 'selected' : ''}`}
+                  aria-pressed={difficulty === key}
                   onClick={() => setDifficulty(key)}
                 >
                   {label}
@@ -323,18 +341,21 @@ const NotationChallenge = ({ onComplete, onBack }) => {
               <div className="option-buttons">
                 <button
                   className={`btn btn-secondary option-button ${perspective === 'white' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'white'}
                   onClick={() => setPerspective('white')}
                 >
                   White
                 </button>
                 <button
                   className={`btn btn-secondary option-button ${perspective === 'black' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'black'}
                   onClick={() => setPerspective('black')}
                 >
                   Black
                 </button>
                 <button
                   className={`btn btn-secondary option-button ${perspective === 'both' ? 'selected' : ''}`}
+                  aria-pressed={perspective === 'both'}
                   onClick={() => setPerspective('both')}
                 >
                   Both

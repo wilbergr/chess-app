@@ -20,7 +20,8 @@
   --border-strong: #333c48;
   --text: #f4f4f6;
   --text-muted: #a1a8b3;
-  --text-faint: #6b7280;
+  /* >=4.5:1 on --bg/--surface/--surface-2 (WCAG AA; was #6b7280 at ~3.9:1). */
+  --text-faint: #8a919e;
 
   /* Color — accent (chess GREEN — the family divergence) + status.
      --accent-hi is the DARKER pressed/hover green (chess convention differs from
@@ -40,14 +41,22 @@
   --danger: #c0392b;
   --danger-hi: #a93226;
   --danger-text: #e74c3c;
+  /* Text/icons on a solid danger fill (e.g. the wrong-square X cue). */
+  --on-danger: #ffffff;
 
   /* Chessboard — intrinsic object colors. These are real board surfaces (light
      parchment / dark wood squares + coordinate ink) and must NOT flip with the
      theme, so there is deliberately no light override for them below. */
   --board-light: #f0d9b5;
   --board-dark: #b58863;
-  --board-coord-on-light: rgba(101, 68, 45, 0.7);
+  /* 0.85 alpha ≈ 4.5:1 over parchment (0.7 was ~3.3:1). */
+  --board-coord-on-light: rgba(101, 68, 45, 0.85);
   --board-coord-on-dark: rgba(240, 217, 181, 0.7);
+  /* Intrinsic dark ink for on-board a11y cues (square focus ring, move dots,
+     selected-ring underlay). Like the square colors it must NOT flip with the
+     theme — theme tokens (--accent, --bg) can drop below 3:1 on the wood/
+     parchment squares, this ink stays >=6:1 on both. */
+  --board-ink: #0d1014;
 
   /* Radius (shared scale) */
   --radius-xs: 4px;
@@ -93,7 +102,8 @@
   --border-strong: #c4bba9;
   --text: #1a1a1f;
   --text-muted: #4a5361;
-  --text-faint: #6b7280;
+  /* >=4.5:1 on all three light surfaces (was #6b7280 at ~4.2:1 on --surface-2). */
+  --text-faint: #5d6673;
   --accent: #4e7d2e;
   --accent-hi: #416a26;
   --accent-bg: rgba(78, 125, 46, 0.14);
@@ -103,6 +113,7 @@
   --danger: #b3271b;
   --danger-hi: #8f1f16;
   --danger-text: #a52318;
+  --on-danger: #ffffff;
   --shadow-sm: 0 2px 8px rgba(60, 50, 40, 0.12);
   --shadow-md: 0 4px 16px rgba(60, 50, 40, 0.15);
   --shadow-lg: 0 8px 24px rgba(60, 50, 40, 0.18);
@@ -117,7 +128,7 @@
     --border-strong: #c4bba9;
     --text: #1a1a1f;
     --text-muted: #4a5361;
-    --text-faint: #6b7280;
+    --text-faint: #5d6673;
     --accent: #4e7d2e;
     --accent-hi: #416a26;
     --accent-bg: rgba(78, 125, 46, 0.14);
@@ -127,6 +138,7 @@
     --danger: #b3271b;
     --danger-hi: #8f1f16;
     --danger-text: #a52318;
+    --on-danger: #ffffff;
     --shadow-sm: 0 2px 8px rgba(60, 50, 40, 0.12);
     --shadow-md: 0 4px 16px rgba(60, 50, 40, 0.15);
     --shadow-lg: 0 8px 24px rgba(60, 50, 40, 0.18);
