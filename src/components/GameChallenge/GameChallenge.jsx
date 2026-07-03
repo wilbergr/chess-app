@@ -1,4 +1,15 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Circle,
+  Dices,
+  Dumbbell,
+  Lightbulb,
+  PartyPopper,
+  Trophy,
+} from 'lucide-react'
 import { Chess } from 'chess.js'
 import ChessBoard from '../ChessBoard/ChessBoard'
 import PerformanceTracker from '../../services/performanceTracker'
@@ -11,9 +22,9 @@ import {
 import './GameChallenge.css'
 
 const DIFFICULTY_SETTINGS = {
-  beginner: { movesVisible: 3, timePerMove: 15, showBoard: true, label: 'Beginner' },
-  intermediate: { movesVisible: 2, timePerMove: 10, showBoard: true, label: 'Intermediate' },
-  advanced: { movesVisible: 1, timePerMove: 6, showBoard: true, label: 'Advanced' },
+  beginner: { movesVisible: 3, timePerMove: 15, label: 'Beginner' },
+  intermediate: { movesVisible: 2, timePerMove: 10, label: 'Intermediate' },
+  advanced: { movesVisible: 1, timePerMove: 6, label: 'Advanced' },
 }
 
 const GameChallenge = ({ onBack }) => {
@@ -41,7 +52,6 @@ const GameChallenge = ({ onBack }) => {
   const [feedback, setFeedback] = useState(null)
   const [wrongAttempts, setWrongAttempts] = useState(0)
   const [timeLeft, setTimeLeft] = useState(null)
-  const [showBoardOverride, setShowBoardOverride] = useState(false)
 
   // Results
   const [showResults, setShowResults] = useState(false)
@@ -61,20 +71,6 @@ const GameChallenge = ({ onBack }) => {
   // Get current settings
   const settings = difficulty ? DIFFICULTY_SETTINGS[difficulty] : null
 
-  // Parse moves into pairs for display
-  const movePairs = useMemo(() => {
-    if (!selectedGame) return []
-    const pairs = []
-    for (let i = 0; i < selectedGame.moves.length; i += 2) {
-      pairs.push({
-        number: Math.floor(i / 2) + 1,
-        white: selectedGame.moves[i],
-        black: selectedGame.moves[i + 1] || null,
-      })
-    }
-    return pairs
-  }, [selectedGame])
-
   // Get current move info
   const currentMove = selectedGame?.moves[currentMoveIndex]
   const isWhiteTurn = currentMoveIndex % 2 === 0
@@ -85,11 +81,6 @@ const GameChallenge = ({ onBack }) => {
     if (!settings || !selectedGame) return { start: 0, end: 0 }
 
     const totalMoves = selectedGame.moves.length
-
-    if (settings.movesVisible === 0) {
-      // Expert: Show all moves but board is hidden
-      return { start: 0, end: totalMoves }
-    }
 
     // Show current move and next N-1 moves
     const start = currentMoveIndex
@@ -350,11 +341,6 @@ const GameChallenge = ({ onBack }) => {
     advanceMove()
   }
 
-  // Toggle board visibility (expert mode)
-  const toggleBoard = () => {
-    setShowBoardOverride((prev) => !prev)
-  }
-
   // Start the game
   const startGame = useCallback(() => {
     if (!selectedGame) return
@@ -379,7 +365,6 @@ const GameChallenge = ({ onBack }) => {
     setWrongAttempts(0)
     setShowResults(false)
     setResults(null)
-    setShowBoardOverride(false)
 
     trackerRef.current.reset()
     trackerRef.current.startChallenge()
@@ -427,16 +412,13 @@ const GameChallenge = ({ onBack }) => {
               >
                 <span className="difficulty-label">{level.label}</span>
                 <span className="difficulty-desc">{level.description}</span>
-                {level.id === 'expert' && (
-                  <span className="difficulty-badge">Blindfold!</span>
-                )}
               </button>
             ))}
           </div>
         </div>
 
         <button className="btn btn-ghost back-button" onClick={onBack}>
-          ← Back to Menu
+          <ArrowLeft aria-hidden="true" /> Back to Menu
         </button>
       </div>
     )
@@ -452,12 +434,12 @@ const GameChallenge = ({ onBack }) => {
           <h3>Select Mode</h3>
           <div className="mode-buttons">
             <button className="mode-button practice" onClick={() => setMode('practice')}>
-              <span className="mode-icon">📚</span>
+              <span className="mode-icon"><BookOpen aria-hidden="true" /></span>
               <span className="mode-name">Practice</span>
               <span className="mode-desc">No timer, hints available</span>
             </button>
             <button className="mode-button challenge" onClick={() => setMode('challenge')}>
-              <span className="mode-icon">🏆</span>
+              <span className="mode-icon"><Trophy aria-hidden="true" /></span>
               <span className="mode-name">Challenge</span>
               <span className="mode-desc">{settings.timePerMove}s per move</span>
             </button>
@@ -465,7 +447,7 @@ const GameChallenge = ({ onBack }) => {
         </div>
 
         <button className="btn btn-ghost back-button" onClick={() => setDifficulty(null)}>
-          ← Change Difficulty
+          <ArrowLeft aria-hidden="true" /> Change Difficulty
         </button>
       </div>
     )
@@ -485,7 +467,7 @@ const GameChallenge = ({ onBack }) => {
             className="game-card random"
             onClick={() => setSelectedGame(getRandomGame(difficulty))}
           >
-            <span className="game-icon">🎲</span>
+            <span className="game-icon"><Dices aria-hidden="true" /></span>
             <span className="game-title">Random Game</span>
             <span className="game-desc">Surprise me!</span>
           </button>
@@ -504,7 +486,7 @@ const GameChallenge = ({ onBack }) => {
         </div>
 
         <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
-          ← Change Mode
+          <ArrowLeft aria-hidden="true" /> Change Mode
         </button>
       </div>
     )
@@ -521,7 +503,11 @@ const GameChallenge = ({ onBack }) => {
 
         <div className={`results ${results.passed ? 'passed' : 'failed'}`}>
           <div className="result-main">
-            <span className="result-icon">{results.passed ? '🎉' : '💪'}</span>
+            <span className="result-icon">
+              {results.passed
+                ? <PartyPopper aria-hidden="true" />
+                : <Dumbbell aria-hidden="true" />}
+            </span>
             <span className="result-accuracy">{results.accuracy}%</span>
             <span className="result-label">Accuracy</span>
           </div>
@@ -586,12 +572,6 @@ const GameChallenge = ({ onBack }) => {
           {selectedGame.moves.length} moves | {mode === 'practice' ? 'Practice' : 'Challenge'} Mode
         </p>
 
-        {difficulty === 'expert' && (
-          <div className="expert-warning">
-            ⚠️ Expert Mode: The board will be hidden! You must visualize the position.
-          </div>
-        )}
-
         {mode === 'practice' && (
           <div className="setting-group">
             <label>Play as</label>
@@ -632,7 +612,7 @@ const GameChallenge = ({ onBack }) => {
             Start Game
           </button>
           <button className="btn btn-ghost back-button" onClick={() => setSelectedGame(null)}>
-            ← Choose Different Game
+            <ArrowLeft aria-hidden="true" /> Choose Different Game
           </button>
         </div>
       </div>
@@ -640,8 +620,6 @@ const GameChallenge = ({ onBack }) => {
   }
 
   // Main game screen
-  const showBoard = settings.showBoard || showBoardOverride
-
   return (
     <div className="game-challenge playing">
       <div className="game-header">
@@ -660,83 +638,62 @@ const GameChallenge = ({ onBack }) => {
         <div className="perspective-indicator">
           {autoPlayPending
             ? <span className="auto-play-indicator">Opponent is moving...</span>
-            : <>Playing as: <strong>{currentPerspective === 'white' ? '⚪ White' : '⚫ Black'}</strong></>
+            : (
+              <>
+                Playing as:{' '}
+                <strong>
+                  <Circle
+                    className={currentPerspective === 'white' ? 'piece-dot-white' : 'piece-dot-black'}
+                    aria-hidden="true"
+                  />{' '}
+                  {currentPerspective === 'white' ? 'White' : 'Black'}
+                </strong>
+              </>
+            )
           }
         </div>
 
         <div className="notation-display">
           <div className="move-indicator">
-            {isWhiteTurn ? '⚪' : '⚫'} {moveNumber}. {!isWhiteTurn && '...'}
+            <Circle
+              className={isWhiteTurn ? 'piece-dot-white' : 'piece-dot-black'}
+              aria-hidden="true"
+            />{' '}
+            {moveNumber}. {!isWhiteTurn && '...'}
           </div>
 
           <div className="moves-to-play">
-            {settings.movesVisible === 0 ? (
-              // Expert: Show full notation
-              <div className="full-notation">
-                {movePairs.map((pair, idx) => (
-                  <span
-                    key={pair.number}
-                    className={`move-pair ${
-                      currentMoveIndex >= idx * 2 && currentMoveIndex < idx * 2 + 2 ? 'current' : ''
-                    } ${currentMoveIndex > idx * 2 + 1 ? 'played' : ''}`}
-                  >
-                    <span className="move-number">{pair.number}.</span>
-                    <span className={`move ${currentMoveIndex === idx * 2 ? 'active' : ''}`}>
-                      {pair.white}
-                    </span>
-                    {pair.black && (
-                      <span className={`move ${currentMoveIndex === idx * 2 + 1 ? 'active' : ''}`}>
-                        {pair.black}
-                      </span>
-                    )}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              // Normal: Show limited moves
-              <div className="limited-notation">
-                {selectedGame.moves
-                  .slice(visibleMoveRange.start, visibleMoveRange.end)
-                  .map((move, idx) => {
-                    const actualIdx = visibleMoveRange.start + idx
-                    const isActive = actualIdx === currentMoveIndex
-                    const moveNum = Math.floor(actualIdx / 2) + 1
-                    const isWhite = actualIdx % 2 === 0
+            <div className="limited-notation">
+              {selectedGame.moves
+                .slice(visibleMoveRange.start, visibleMoveRange.end)
+                .map((move, idx) => {
+                  const actualIdx = visibleMoveRange.start + idx
+                  const isActive = actualIdx === currentMoveIndex
+                  const moveNum = Math.floor(actualIdx / 2) + 1
+                  const isWhite = actualIdx % 2 === 0
 
-                    return (
-                      <span key={actualIdx} className={`upcoming-move ${isActive ? 'active' : ''}`}>
-                        {isWhite && <span className="move-number">{moveNum}.</span>}
-                        {!isWhite && idx === 0 && <span className="move-number">{moveNum}...</span>}
-                        <span className="move">{move}</span>
-                      </span>
-                    )
-                  })}
-              </div>
-            )}
+                  return (
+                    <span key={actualIdx} className={`upcoming-move ${isActive ? 'active' : ''}`}>
+                      {isWhite && <span className="move-number">{moveNum}.</span>}
+                      {!isWhite && idx === 0 && <span className="move-number">{moveNum}...</span>}
+                      <span className="move">{move}</span>
+                    </span>
+                  )
+                })}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="game-board-container">
-        {!showBoard ? (
-          <div className="blindfold-mode">
-            <div className="blindfold-icon">🙈</div>
-            <p>Board Hidden</p>
-            <p className="blindfold-hint">Visualize the position!</p>
-            <button className="btn peek-button" onClick={toggleBoard}>
-              👁️ Peek (costs points)
-            </button>
-          </div>
-        ) : (
-          <ChessBoard
-            fen={chess?.fen()}
-            flipped={currentPerspective === 'black'}
-            selectedSquare={selectedSquare}
-            highlightedSquares={validMoves}
-            onSquareClick={handleSquareClick}
-            showLabels={mode === 'challenge' && difficulty === 'advanced' ? false : showCoords}
-          />
-        )}
+        <ChessBoard
+          fen={chess?.fen()}
+          flipped={currentPerspective === 'black'}
+          selectedSquare={selectedSquare}
+          highlightedSquares={validMoves}
+          onSquareClick={handleSquareClick}
+          showLabels={mode === 'challenge' && difficulty === 'advanced' ? false : showCoords}
+        />
       </div>
 
       {feedback && (
@@ -749,18 +706,12 @@ const GameChallenge = ({ onBack }) => {
         {mode === 'practice' && !feedback && (
           <>
             <button className="btn hint-button" onClick={handleHint}>
-              💡 Hint
+              <Lightbulb aria-hidden="true" /> Hint
             </button>
             <button className="btn btn-secondary skip-button" onClick={handleSkip}>
-              Skip →
+              Skip <ArrowRight aria-hidden="true" />
             </button>
           </>
-        )}
-
-        {difficulty === 'expert' && showBoard && (
-          <button className="btn btn-secondary hide-button" onClick={toggleBoard}>
-            🙈 Hide Board
-          </button>
         )}
 
         {mode === 'practice' && (
