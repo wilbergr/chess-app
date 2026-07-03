@@ -1,4 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import {
+  ArrowLeft,
+  BookOpen,
+  Check,
+  Dumbbell,
+  PartyPopper,
+  Timer,
+  Trophy,
+  X,
+} from 'lucide-react'
 import ChessBoard from '../ChessBoard/ChessBoard'
 import PerformanceTracker from '../../services/performanceTracker'
 import './SquareChallenge.css'
@@ -200,12 +210,12 @@ const SquareChallenge = ({ onComplete, onBack }) => {
           <h3>Select Mode</h3>
           <div className="mode-buttons">
             <button className="mode-button practice" onClick={() => setMode('practice')}>
-              <span className="mode-icon">📚</span>
+              <span className="mode-icon"><BookOpen aria-hidden="true" /></span>
               <span className="mode-name">Practice</span>
               <span className="mode-desc">No timer, unlimited practice</span>
             </button>
             <button className="mode-button challenge" onClick={() => setMode('challenge')}>
-              <span className="mode-icon">🏆</span>
+              <span className="mode-icon"><Trophy aria-hidden="true" /></span>
               <span className="mode-name">Challenge</span>
               <span className="mode-desc">Timed, {CHALLENGE_LENGTH} squares</span>
             </button>
@@ -213,7 +223,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
         </div>
 
         <button className="btn btn-ghost back-button" onClick={onBack}>
-          ← Back to Menu
+          <ArrowLeft aria-hidden="true" /> Back to Menu
         </button>
       </div>
     )
@@ -279,7 +289,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
             Start {mode === 'practice' ? 'Practice' : 'Challenge'}
           </button>
           <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
-            ← Change Mode
+            <ArrowLeft aria-hidden="true" /> Change Mode
           </button>
         </div>
       </div>
@@ -294,7 +304,11 @@ const SquareChallenge = ({ onComplete, onBack }) => {
 
         <div className={`results ${results.passed ? 'passed' : 'failed'}`}>
           <div className="result-main">
-            <span className="result-icon">{results.passed ? '🎉' : '💪'}</span>
+            <span className="result-icon">
+              {results.passed
+                ? <PartyPopper aria-hidden="true" />
+                : <Dumbbell aria-hidden="true" />}
+            </span>
             <span className="result-accuracy">{results.accuracy}%</span>
             <span className="result-label">Accuracy</span>
           </div>
@@ -337,7 +351,7 @@ const SquareChallenge = ({ onComplete, onBack }) => {
             Try Again
           </button>
           <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
-            ← Change Settings
+            <ArrowLeft aria-hidden="true" /> Change Settings
           </button>
         </div>
       </div>
@@ -361,14 +375,17 @@ const SquareChallenge = ({ onComplete, onBack }) => {
           )}
           {mode === 'practice' && (
             <span className="practice-stats">
-              ✓ {trackerRef.current.getCorrectCount()} | ✗ {trackerRef.current.getIncorrectCount()}
+              <Check className="stat-icon-correct" role="img" aria-label="Correct" />{' '}
+              {trackerRef.current.getCorrectCount()} |{' '}
+              <X className="stat-icon-wrong" role="img" aria-label="Incorrect" />{' '}
+              {trackerRef.current.getIncorrectCount()}
             </span>
           )}
         </div>
 
         <div className="target-square">
           <span className="target-label">Find:</span>
-          <span className="target-value">{currentSquare?.toUpperCase()}</span>
+          <span className="target-value">{currentSquare}</span>
         </div>
 
         <div className="perspective-indicator">
@@ -394,9 +411,9 @@ const SquareChallenge = ({ onComplete, onBack }) => {
 
       {feedback && (
         <div className={`feedback ${feedback.type}`}>
-          {feedback.type === 'correct' && '✓ Correct!'}
-          {feedback.type === 'wrong' && `✗ Wrong! It was ${feedback.correctSquare?.toUpperCase()}`}
-          {feedback.type === 'timeout' && `⏱ Time's up! It was ${feedback.square?.toUpperCase()}`}
+          {feedback.type === 'correct' && <><Check aria-hidden="true" /> Correct!</>}
+          {feedback.type === 'wrong' && <><X aria-hidden="true" /> Wrong! It was {feedback.correctSquare}</>}
+          {feedback.type === 'timeout' && <><Timer aria-hidden="true" /> Time's up! It was {feedback.square}</>}
         </div>
       )}
 

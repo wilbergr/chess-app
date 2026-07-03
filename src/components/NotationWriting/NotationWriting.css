@@ -68,9 +68,14 @@
 .mode-button.challenge:hover { border-color: var(--warning); }
 
 .mode-icon {
+  display: inline-flex;
   font-size: 2.5rem;
+  line-height: 1;
   margin-bottom: var(--space-3);
 }
+
+.mode-button.practice .mode-icon { color: var(--accent); }
+.mode-button.challenge .mode-icon { color: var(--warning); }
 
 .mode-name {
   font-size: 1.2rem;
@@ -474,9 +479,14 @@
 }
 
 .result-icon {
+  display: inline-flex;
   font-size: 3rem;
+  line-height: 1;
   margin-bottom: var(--space-3);
 }
+
+.results.passed .result-icon { color: var(--success); }
+.results.failed .result-icon { color: var(--warning); }
 
 .result-accuracy {
   font-size: 4rem;

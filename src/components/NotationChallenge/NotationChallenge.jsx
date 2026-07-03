@@ -1,4 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Check,
+  Circle,
+  Dumbbell,
+  Lightbulb,
+  PartyPopper,
+  Trophy,
+  X,
+} from 'lucide-react'
 import ChessBoard from '../ChessBoard/ChessBoard'
 import PerformanceTracker from '../../services/performanceTracker'
 import {
@@ -259,12 +271,12 @@ const NotationChallenge = ({ onComplete, onBack }) => {
           <h3>Select Mode</h3>
           <div className="mode-buttons">
             <button className="mode-button practice" onClick={() => setMode('practice')}>
-              <span className="mode-icon">📚</span>
+              <span className="mode-icon"><BookOpen aria-hidden="true" /></span>
               <span className="mode-name">Practice</span>
               <span className="mode-desc">No timer, hints available</span>
             </button>
             <button className="mode-button challenge" onClick={() => setMode('challenge')}>
-              <span className="mode-icon">🏆</span>
+              <span className="mode-icon"><Trophy aria-hidden="true" /></span>
               <span className="mode-name">Challenge</span>
               <span className="mode-desc">Timed, {CHALLENGE_LENGTH} moves</span>
             </button>
@@ -272,7 +284,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
         </div>
 
         <button className="btn btn-ghost back-button" onClick={onBack}>
-          ← Back to Menu
+          <ArrowLeft aria-hidden="true" /> Back to Menu
         </button>
       </div>
     )
@@ -343,7 +355,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
             Start {mode === 'practice' ? 'Practice' : 'Challenge'}
           </button>
           <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
-            ← Change Mode
+            <ArrowLeft aria-hidden="true" /> Change Mode
           </button>
         </div>
       </div>
@@ -358,7 +370,11 @@ const NotationChallenge = ({ onComplete, onBack }) => {
 
         <div className={`results ${results.passed ? 'passed' : 'failed'}`}>
           <div className="result-main">
-            <span className="result-icon">{results.passed ? '🎉' : '💪'}</span>
+            <span className="result-icon">
+              {results.passed
+                ? <PartyPopper aria-hidden="true" />
+                : <Dumbbell aria-hidden="true" />}
+            </span>
             <span className="result-accuracy">{results.accuracy}%</span>
             <span className="result-label">Accuracy</span>
           </div>
@@ -401,7 +417,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
             Try Again
           </button>
           <button className="btn btn-ghost back-button" onClick={() => setMode(null)}>
-            ← Change Settings
+            <ArrowLeft aria-hidden="true" /> Change Settings
           </button>
         </div>
       </div>
@@ -425,7 +441,10 @@ const NotationChallenge = ({ onComplete, onBack }) => {
           )}
           {mode === 'practice' && (
             <span className="practice-stats">
-              ✓ {trackerRef.current.getCorrectCount()} | ✗ {trackerRef.current.getIncorrectCount()}
+              <Check className="stat-icon-correct" role="img" aria-label="Correct" />{' '}
+              {trackerRef.current.getCorrectCount()} |{' '}
+              <X className="stat-icon-wrong" role="img" aria-label="Incorrect" />{' '}
+              {trackerRef.current.getIncorrectCount()}
             </span>
           )}
         </div>
@@ -436,14 +455,21 @@ const NotationChallenge = ({ onComplete, onBack }) => {
         </div>
 
         <div className="turn-indicator">
-          Playing as: <strong>{currentPerspective === 'white' ? '⚪ White' : '⚫ Black'}</strong>
+          Playing as:{' '}
+          <strong>
+            <Circle
+              className={currentPerspective === 'white' ? 'piece-dot-white' : 'piece-dot-black'}
+              aria-hidden="true"
+            />{' '}
+            {currentPerspective === 'white' ? 'White' : 'Black'}
+          </strong>
           {' | '}
           {challenge?.turn === 'white' ? 'White to move' : 'Black to move'}
         </div>
 
         {showHint && challenge && (
           <div className="hint">
-            Move: {challenge.from.toUpperCase()} → {challenge.to.toUpperCase()}
+            <Lightbulb aria-hidden="true" /> Move: {challenge.from} → {challenge.to}
           </div>
         )}
       </div>
@@ -476,11 +502,11 @@ const NotationChallenge = ({ onComplete, onBack }) => {
           <>
             {!showHint && (
               <button className="btn hint-button" onClick={handleHint}>
-                💡 Show Hint
+                <Lightbulb aria-hidden="true" /> Hint
               </button>
             )}
             <button className="btn btn-secondary skip-button" onClick={handleSkip}>
-              Skip →
+              Skip <ArrowRight aria-hidden="true" />
             </button>
           </>
         )}

@@ -31,6 +31,23 @@ toggle yet, mirroring piano-app). The light accent is darkened to `#4e7d2e` for 
 Translucent tints (subtle green/amber/red fills & borders) use
 `color-mix(in srgb, var(--token) N%, transparent)` inline rather than one-off rgba tokens.
 
+## Icons — lucide-react (PR3)
+
+UI chrome uses `lucide-react` icons — **no emoji as UI**. A global `.lucide` rule in
+`index.css` sizes every icon at `1em`/`currentColor`, so icons scale with the parent's
+font-size; larger sites (`.mode-icon`, `.result-icon`, `.game-icon`) just set
+font-size + a token color (practice=accent, challenge=warning, passed=success,
+failed=warning). Icons paired with text are `aria-hidden`; meaning-bearing icons
+(the practice-tally Check/X) carry `role="img"` + `aria-label`. "Playing as"/turn
+indicators render `<Circle>` with `.piece-dot-white`/`.piece-dot-black` (`index.css`),
+filled with the **intrinsic board tokens** so they don't flip with the theme.
+**Board piece SVGs (`ChessPieces.jsx`) are intrinsic — never swap them for icon art.**
+ChallengeSelector menu-card SVGs are colored via inline `style={{fill:'var(--token)'}}`
+— SVG presentation attributes can't hold `var()`. Chess coordinates display
+**lowercase** ("e4") everywhere — never `.toUpperCase()` a square for display.
+The unreachable Expert/blindfold mode in GameChallenge (no expert games exist in
+`data/games.js`) was removed in PR3; if blindfold returns, rebuild it deliberately.
+
 ## Shared button classes (`index.css`)
 
 `.btn` + variants `.btn-primary` (green), `.btn-secondary`, `.btn-ghost`, `.btn-danger`

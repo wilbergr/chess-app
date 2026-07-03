@@ -127,6 +127,29 @@ a:focus-visible {
   min-width: 44px;
 }
 
+/* ---- Icons (lucide-react) ----------------------------------------------
+   UI icons size with the surrounding text (1em) and color with currentColor;
+   larger sites (.mode-icon, .result-icon, …) just set font-size + color. */
+.lucide {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+}
+
+/* Piece-color dots for "Playing as" / turn indicators. Like the board itself
+   these are intrinsic object colors and do not flip with the theme. */
+.piece-dot-white,
+.piece-dot-black {
+  color: var(--board-coord-on-light);
+}
+.piece-dot-white { fill: var(--board-light); }
+.piece-dot-black { fill: var(--board-dark); }
+
+/* Correct/incorrect tallies in the practice HUD. */
+.stat-icon-correct { color: var(--success); }
+.stat-icon-wrong { color: var(--danger-text); }
+
 .coords-toggle {
   display: inline-flex;
   align-items: center;
