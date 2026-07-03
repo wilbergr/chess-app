@@ -188,7 +188,8 @@
 }
 
 .timer.warning {
-  color: var(--danger);
+  /* --danger-text: >=4.5:1 on --bg (solid --danger is ~3.5:1 in dark theme) */
+  color: var(--danger-text);
   animation: pulse-warning 0.5s ease infinite;
 }
 

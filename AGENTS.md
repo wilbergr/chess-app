@@ -88,3 +88,48 @@ wraps + centers on mobile so title/progress/timer never overflow.
 **Viewport units / safe area:** `min-height` uses the `100vh` + `100dvh` double-declaration
 pattern (dvh wins where supported). `.app` pads with `env(safe-area-inset-left/right)`;
 `viewport-fit=cover` is set in `index.html` — don't remove it or the insets go dead.
+
+## Accessibility (PR4)
+
+**Board keyboard model (roving tabindex):** every square in an interactive board is
+`role="button"` with an `aria-label` ("e4, white pawn" / "e4, empty" + state suffix) and
+`aria-pressed` for selection. Exactly ONE square carries `tabIndex=0` (`focusStop` state in
+`ChessBoard.jsx`, defaulting to the bottom-left *visual* square); the rest are `-1`. Arrow
+keys move focus in **visual** directions (deltas are inverted when `flipped`), Enter/Space
+calls the same `onClick(square)` as a mouse click — never add a parallel keyboard-only code
+path. Display-only boards (Write Notation) pass `interactive={false}` to `ChessBoard`, which
+renders plain divs — don't expose 64 do-nothing buttons.
+
+**Live region:** ONE app-wide `aria-live="polite"` region (`components/LiveRegion.jsx`,
+mounted once in `App.jsx`; `.sr-only` util in `index.css`). Components call `announce()`
+from `services/announcer.js` for anything conveyed only visually: correct/wrong/timeout
+feedback, opponent moves, check/checkmate (derived from `+`/`#` in SAN), timer warnings,
+mode changes, results. It's a singleton on purpose — per-screen live regions remount on
+screen changes and freshly-mounted regions never announce. `announce()` appends a
+zero-width space when the same text repeats so "Correct!" twice still re-announces.
+
+**Non-color square cues** (`ChessBoard.css`): every color state has a shape twin —
+highlighted = accent ring + center **dot** (ring-only when `.occupied` so the piece stays
+visible), selected = **two-tone** ring (warning + `--board-ink`), correct = drawn
+**checkmark** pseudo-element, wrong = drawn **X** (two crossed bars). Cues are CSS-drawn,
+not glyph characters (no-emoji rule). `--board-ink` is a new **intrinsic** token (never
+theme-flipped) for on-board cues: square `:focus-visible` uses a 3px *inset* `--board-ink`
+outline because (a) the board clips overflow and (b) theme accents fall below 3:1 on the
+wood/parchment squares; `--board-ink` stays ≥6:1 on both.
+
+**Focus-visible:** the global rule in `index.css` (2px `--accent`, offset 2px) covers
+button/a/input/select/textarea plus a zero-specificity `:where([role="button"])` arm so the
+board's own rule always wins. Keep new interactive elements inside these selectors.
+
+**Contrast floors (AA):** `--text-faint` is `#8a919e` dark / `#5d6673` light — chosen to
+clear 4.5:1 on all three surfaces in each theme; don't lower them. Warning-state timers use
+`--danger-text`, not `--danger` (solid danger red is ~3.5:1 on the dark bg).
+`--board-coord-on-light` alpha is 0.85 (4.5:1 on parchment).
+
+**Reduced motion:** one global `@media (prefers-reduced-motion: reduce)` block in
+`index.css` collapses ALL animations/transitions — new keyframes need no individual wrap.
+
+**Landmarks/headings:** `App.jsx` renders `<main>` + a `.sr-only` h1 on challenge screens
+(the selector screen has the visible h1); challenge screens start at h2. Selectable pills
+carry `aria-pressed`; decorative SVGs/icons are `aria-hidden`; the board's external
+rank/file label strips are `aria-hidden` (squares already announce coordinates).

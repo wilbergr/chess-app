@@ -19,7 +19,7 @@ const ChallengeSelector = ({ onSelectChallenge }) => {
           onClick={() => onSelectChallenge('square')}
         >
           <div className="challenge-icon">
-            <svg viewBox="0 0 100 100" width="80" height="80">
+            <svg viewBox="0 0 100 100" width="80" height="80" aria-hidden="true">
               {/* Simple chessboard icon */}
               <rect x="10" y="10" width="20" height="20" style={svgFill('--board-dark')} />
               <rect x="30" y="10" width="20" height="20" style={svgFill('--board-light')} />
@@ -59,7 +59,7 @@ const ChallengeSelector = ({ onSelectChallenge }) => {
           onClick={() => onSelectChallenge('notation')}
         >
           <div className="challenge-icon">
-            <svg viewBox="0 0 100 100" width="80" height="80">
+            <svg viewBox="0 0 100 100" width="80" height="80" aria-hidden="true">
               {/* Chess notation example */}
               <rect x="5" y="20" width="90" height="60" rx="8" style={svgFill('--surface-2')} />
               <text x="50" y="58" textAnchor="middle" fontSize="24" fontWeight="bold" style={svgFill('--text')} fontFamily="Georgia, serif">Nxf7+</text>
@@ -82,7 +82,7 @@ const ChallengeSelector = ({ onSelectChallenge }) => {
           onClick={() => onSelectChallenge('writing')}
         >
           <div className="challenge-icon">
-            <svg viewBox="0 0 100 100" width="80" height="80">
+            <svg viewBox="0 0 100 100" width="80" height="80" aria-hidden="true">
               {/* Keyboard/typing icon */}
               <rect x="10" y="25" width="80" height="50" rx="6" style={svgFill('--surface-2')} />
               <rect x="18" y="33" width="12" height="10" rx="2" style={svgFill('--text-muted')} />
@@ -114,7 +114,7 @@ const ChallengeSelector = ({ onSelectChallenge }) => {
           onClick={() => onSelectChallenge('game')}
         >
           <div className="challenge-icon">
-            <svg viewBox="0 0 100 100" width="80" height="80">
+            <svg viewBox="0 0 100 100" width="80" height="80" aria-hidden="true">
               {/* Scrolling game notation */}
               <rect x="10" y="10" width="80" height="80" rx="6" style={svgFill('--surface-2')} />
               <text x="50" y="30" textAnchor="middle" fontSize="10" style={svgFill('--text-muted')} fontFamily="Georgia, serif">1. e4 e5</text>

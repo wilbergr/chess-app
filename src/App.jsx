@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import LiveRegion from './components/LiveRegion'
 import ChallengeSelector from './components/ChallengeSelector/ChallengeSelector'
 import SquareChallenge from './components/SquareChallenge/SquareChallenge'
 import NotationChallenge from './components/NotationChallenge/NotationChallenge'
@@ -18,7 +19,12 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <main className="app">
+      <LiveRegion />
+      {/* Challenge screens start at h2; the selector screen has the visible h1. */}
+      {currentChallenge !== null && (
+        <h1 className="sr-only">Chess Trainer</h1>
+      )}
       {currentChallenge === null && (
         <ChallengeSelector onSelectChallenge={handleSelectChallenge} />
       )}
@@ -38,7 +44,7 @@ function App() {
       {currentChallenge === 'game' && (
         <GameChallenge onBack={handleBack} />
       )}
-    </div>
+    </main>
   )
 }
 

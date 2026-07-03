@@ -19,7 +19,12 @@ import {
   getRandomGame,
   getDifficultyLevels,
 } from '../../data/games'
+import { announce } from '../../services/announcer'
 import './GameChallenge.css'
+
+// "check" / "checkmate" suffix for announcements, derived from SAN
+const checkSuffix = (san) =>
+  san?.includes('#') ? ', checkmate' : san?.includes('+') ? ', check' : ''
 
 const DIFFICULTY_SETTINGS = {
   beginner: { movesVisible: 3, timePerMove: 15, label: 'Beginner' },
@@ -117,6 +122,7 @@ const GameChallenge = ({ onBack }) => {
             type: 'timeout',
             message: `Time's up! The move was ${currentMove}`,
           })
+          announce(`Time's up! The move was ${currentMove}`)
           setWrongAttempts((prev) => prev + 1)
 
           // Auto-advance after delay
@@ -126,6 +132,7 @@ const GameChallenge = ({ onBack }) => {
 
           return 0
         }
+        if (prev === 6) announce('5 seconds left')
         return prev - 1
       })
     }, 1000)
@@ -212,6 +219,7 @@ const GameChallenge = ({ onBack }) => {
       }
 
       setChess(newChess)
+      announce(`Opponent played ${move}${checkSuffix(move)}`)
 
       const nextIndex = capturedMoveIndex + 1
       if (nextIndex >= capturedGame.moves.length) {
@@ -286,6 +294,7 @@ const GameChallenge = ({ onBack }) => {
       if (isCorrect) {
         trackerRef.current.recordAttempt(true, { move: expectedMove })
         setFeedback({ type: 'correct', message: 'Correct!' })
+        announce(`Correct! ${expectedMove}${checkSuffix(expectedMove)}`)
 
         setTimeout(() => {
           advanceMove()
@@ -300,6 +309,7 @@ const GameChallenge = ({ onBack }) => {
           type: 'wrong',
           message: `Wrong! You played ${madeMove.san}, expected ${expectedMove}`,
         })
+        announce(`Wrong! You played ${madeMove.san}, expected ${expectedMove}`)
         setSelectedSquare(null)
         setValidMoves([])
 
@@ -329,6 +339,7 @@ const GameChallenge = ({ onBack }) => {
       if (move) {
         setSelectedSquare(move.from)
         setValidMoves([move.to])
+        announce(`Hint: move from ${move.from} to ${move.to}`)
       }
     } catch (e) {
       console.error('Failed to parse hint move:', e)
@@ -389,7 +400,17 @@ const GameChallenge = ({ onBack }) => {
     setIsPlaying(false)
     setShowResults(false)
     setSelectedGame(null)
+    if (mode) announce(mode === 'practice' ? 'Practice mode' : 'Challenge mode')
   }, [difficulty, mode, clearTimer])
+
+  // Announce results (they only appear visually)
+  useEffect(() => {
+    if (showResults && results) {
+      announce(
+        `Game complete. ${results.accuracy} percent accuracy, ${results.correct} correct, ${results.incorrect} wrong. ${results.passed ? 'Passed!' : 'Not passed.'}`
+      )
+    }
+  }, [showResults, results])
 
   // Difficulty selection screen
   if (!difficulty) {
@@ -578,18 +599,21 @@ const GameChallenge = ({ onBack }) => {
             <div className="perspective-options">
               <button
                 className={`btn btn-secondary perspective-option ${perspective === 'white' ? 'selected' : ''}`}
+                aria-pressed={perspective === 'white'}
                 onClick={() => setPerspective('white')}
               >
                 White
               </button>
               <button
                 className={`btn btn-secondary perspective-option ${perspective === 'black' ? 'selected' : ''}`}
+                aria-pressed={perspective === 'black'}
                 onClick={() => setPerspective('black')}
               >
                 Black
               </button>
               <button
                 className={`btn btn-secondary perspective-option ${perspective === 'both' ? 'selected' : ''}`}
+                aria-pressed={perspective === 'both'}
                 onClick={() => setPerspective('both')}
               >
                 Both

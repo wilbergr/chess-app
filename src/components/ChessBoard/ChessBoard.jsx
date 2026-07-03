@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import Square from './Square'
 import './ChessBoard.css'
 
@@ -39,8 +39,33 @@ const ChessBoard = ({
   showCoordinates = false,
   showLabels = true,
   onSquareClick = () => {},
+  // false renders a display-only board: squares are plain divs, not buttons
+  // (used where clicking has no effect, e.g. Write Notation).
+  interactive = true,
 }) => {
   const pieces = useMemo(() => parseFEN(fen), [fen])
+
+  // Roving tabindex: one square carries tabIndex=0, arrow keys move focus
+  // around the board (matching the visual orientation, so ArrowUp always
+  // moves toward the top of the screen even when flipped).
+  const boardRef = useRef(null)
+  const [focusSquare, setFocusSquare] = useState(null)
+  const focusStop = focusSquare ?? (flipped ? 'h8' : 'a1') // bottom-left visually
+
+  const handleKeyNav = (from, key) => {
+    let df = { ArrowLeft: -1, ArrowRight: 1 }[key] ?? 0
+    let dr = { ArrowDown: -1, ArrowUp: 1 }[key] ?? 0
+    if (flipped) {
+      df = -df
+      dr = -dr
+    }
+    const fileIndex = FILES.indexOf(from[0]) + df
+    const rank = Number(from[1]) + dr
+    if (fileIndex < 0 || fileIndex > 7 || rank < 1 || rank > 8) return
+    const next = FILES[fileIndex] + rank
+    setFocusSquare(next)
+    boardRef.current?.querySelector(`[data-square="${next}"]`)?.focus()
+  }
 
   // Create array of squares in the correct order based on flip state
   const squares = useMemo(() => {
@@ -72,14 +97,19 @@ const ChessBoard = ({
   return (
     <div className="chess-board-container">
       {showLabels && (
-        <div className="rank-labels">
+        <div className="rank-labels" aria-hidden="true">
           {rankLabels.map((rank) => (
             <div key={rank} className="rank-label">{rank}</div>
           ))}
         </div>
       )}
       <div className="board-and-files">
-        <div className="chess-board">
+        <div
+          className="chess-board"
+          ref={boardRef}
+          role="group"
+          aria-label="Chess board"
+        >
           {squares.map(({ square, isLight, piece }) => (
             <Square
               key={square}
@@ -92,12 +122,14 @@ const ChessBoard = ({
               isWrong={wrongSquare === square}
               showCoordinate={showCoordinates}
               onClick={onSquareClick}
-              flipped={flipped}
+              onKeyNav={handleKeyNav}
+              isFocusStop={square === focusStop}
+              interactive={interactive}
             />
           ))}
         </div>
         {showLabels && (
-          <div className="file-labels">
+          <div className="file-labels" aria-hidden="true">
             {fileLabels.map((file) => (
               <div key={file} className="file-label">{file}</div>
             ))}

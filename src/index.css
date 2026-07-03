@@ -41,10 +41,47 @@ button {
   font-family: inherit;
 }
 
+/* Tokenized focus ring on every interactive element. Board squares override
+   this in ChessBoard.css with an inset --board-ink ring (the board clips
+   overflow, and the accent green lacks contrast on the intrinsic square
+   colors). :where() keeps the [role="button"] arm at zero specificity so the
+   square rule always wins. */
 button:focus-visible,
-a:focus-visible {
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+:where([role='button']):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* Visually hidden, still announced by screen readers (live regions, sr-only
+   headings). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Motion opt-out: collapses every animation/transition (slide-up, shake,
+   pulse-warning, pulse-correct, …) app-wide rather than wrapping each
+   declaration. State changes still land on their end frame. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ---- Shared button system ----------------------------------------------
