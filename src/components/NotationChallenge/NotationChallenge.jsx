@@ -440,10 +440,6 @@ const NotationChallenge = ({ onComplete, onBack }) => {
                 it settles into single steps. How many squares forward can that
                 very first march carry it?
               </p>
-              <details className="challenge-riddle-reveal">
-                <summary>Reveal answer</summary>
-                <span className="challenge-riddle-answer">2</span>
-              </details>
             </div>
           )}
         </div>
