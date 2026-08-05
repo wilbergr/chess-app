@@ -372,10 +372,6 @@ const SquareChallenge = ({ onComplete, onBack }) => {
                 forever to its L-shaped hop, how many leaps must it make to
                 reach that neighbouring square?
               </p>
-              <details className="challenge-riddle-reveal">
-                <summary>Reveal answer</summary>
-                <span className="challenge-riddle-answer">3</span>
-              </details>
             </div>
           )}
         </div>

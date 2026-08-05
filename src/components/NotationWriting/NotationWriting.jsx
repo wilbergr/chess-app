@@ -535,10 +535,6 @@ const NotationWriting = ({ onBack }) => {
                 stone. Worth more than a knight yet less than a queen, how many
                 pawns equal my throne?
               </p>
-              <details className="challenge-riddle-reveal">
-                <summary>Reveal answer</summary>
-                <span className="challenge-riddle-answer">5</span>
-              </details>
             </div>
           )}
         </div>
