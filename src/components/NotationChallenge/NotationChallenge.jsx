@@ -431,6 +431,21 @@ const NotationChallenge = ({ onComplete, onBack }) => {
               <span className="challenge-code-value">{challengeConfig.notationChallengeCode}</span>
             </div>
           )}
+
+          {difficulty === 'hard' && (
+            <div className="challenge-riddle">
+              <p className="challenge-riddle-label">A riddle for the hard-mode reader:</p>
+              <p className="challenge-riddle-text">
+                Still on its starting square, a pawn may stretch its legs before
+                it settles into single steps. How many squares forward can that
+                very first march carry it?
+              </p>
+              <details className="challenge-riddle-reveal">
+                <summary>Reveal answer</summary>
+                <span className="challenge-riddle-answer">2</span>
+              </details>
+            </div>
+          )}
         </div>
 
         <div className="action-buttons">
