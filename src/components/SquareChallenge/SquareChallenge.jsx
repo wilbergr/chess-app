@@ -363,6 +363,21 @@ const SquareChallenge = ({ onComplete, onBack }) => {
               <span className="challenge-code-value">{challengeConfig.squareChallengeCode}</span>
             </div>
           )}
+
+          {difficulty === 'hard' && (
+            <div className="challenge-riddle">
+              <p className="challenge-riddle-label">A riddle for the hard-mode locator:</p>
+              <p className="challenge-riddle-text">
+                A lone knight rests on a1, longing for a2 next door. Bound
+                forever to its L-shaped hop, how many leaps must it make to
+                reach that neighbouring square?
+              </p>
+              <details className="challenge-riddle-reveal">
+                <summary>Reveal answer</summary>
+                <span className="challenge-riddle-answer">3</span>
+              </details>
+            </div>
+          )}
         </div>
 
         <div className="action-buttons">

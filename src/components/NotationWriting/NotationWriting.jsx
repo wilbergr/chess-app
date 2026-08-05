@@ -526,6 +526,21 @@ const NotationWriting = ({ onBack }) => {
               <span className="challenge-code-value">{challengeConfig.notationWritingCode}</span>
             </div>
           )}
+
+          {difficulty === 'advanced' && (
+            <div className="challenge-riddle">
+              <p className="challenge-riddle-label">A riddle for the advanced scribe:</p>
+              <p className="challenge-riddle-text">
+                Straight down the files and ranks I roam, a castle carved from
+                stone. Worth more than a knight yet less than a queen, how many
+                pawns equal my throne?
+              </p>
+              <details className="challenge-riddle-reveal">
+                <summary>Reveal answer</summary>
+                <span className="challenge-riddle-answer">5</span>
+              </details>
+            </div>
+          )}
         </div>
 
         <div className="action-buttons">
