@@ -177,3 +177,10 @@ start on pieces, empty squares still scroll the page. Drag-state CSS: `.drag-ori
 **Promotion is auto-queen** (`promotion: 'q'` hardcoded in GameChallenge's
 `handleSquareClick`); drag inherits this. If a promotion picker is ever added, put it in
 the consumer's click handler so all three input paths get it.
+
+## Maintaining this file
+
+Keep this file for knowledge useful to almost every future agent session in this project.
+Do not repeat what the codebase already shows; point to the authoritative file or command instead.
+Prefer rewriting or pruning existing entries over appending new ones.
+When updating this file, preserve this bar for all agents and keep entries concise.

@@ -368,9 +368,10 @@ const SquareChallenge = ({ onComplete, onBack }) => {
             <div className="challenge-riddle">
               <p className="challenge-riddle-label">A riddle for the hard-mode locator:</p>
               <p className="challenge-riddle-text">
-                A lone knight rests on a1, longing for a2 next door. Bound
-                forever to its L-shaped hop, how many leaps must it make to
-                reach that neighbouring square?
+                Trace every square you can find on the eight-by-eight board —
+                not only the sixty-four little cells, but every larger frame
+                nested within, from two-by-two up to the whole board itself. How
+                many squares in all can a sharp-eyed locator count?
               </p>
             </div>
           )}

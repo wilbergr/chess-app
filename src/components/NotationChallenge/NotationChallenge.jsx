@@ -436,9 +436,10 @@ const NotationChallenge = ({ onComplete, onBack }) => {
             <div className="challenge-riddle">
               <p className="challenge-riddle-label">A riddle for the hard-mode reader:</p>
               <p className="challenge-riddle-text">
-                Still on its starting square, a pawn may stretch its legs before
-                it settles into single steps. How many squares forward can that
-                very first march carry it?
+                White may open with any of its twenty legal first moves, and
+                Black may answer with any of its own twenty. Read one full move
+                from each side — how many distinct positions can the score sheet
+                record?
               </p>
             </div>
           )}

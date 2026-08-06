@@ -531,9 +531,10 @@ const NotationWriting = ({ onBack }) => {
             <div className="challenge-riddle">
               <p className="challenge-riddle-label">A riddle for the advanced scribe:</p>
               <p className="challenge-riddle-text">
-                Straight down the files and ranks I roam, a castle carved from
-                stone. Worth more than a knight yet less than a queen, how many
-                pawns equal my throne?
+                In a scribe's ledger a queen is worth nine, a rook worth five,
+                and a bishop worth three. Pen those three worths as digits in a
+                single line, greatest first — what three-digit number have you
+                written?
               </p>
             </div>
           )}
