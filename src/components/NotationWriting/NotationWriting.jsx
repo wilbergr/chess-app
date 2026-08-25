@@ -6,6 +6,7 @@ import {
   Circle,
   Dumbbell,
   Lightbulb,
+  Lock,
   PartyPopper,
   PenLine,
   Trophy,
@@ -513,6 +514,10 @@ const NotationWriting = ({ onBack }) => {
 
           {difficulty === 'advanced' && results.accuracy >= 90 && (
             <div className="challenge-riddle">
+              <span className="padlock-chip padlock-chip-fuchsia">
+                <Lock aria-hidden="true" />
+                Dark-fuchsia padlock
+              </span>
               <p className="challenge-riddle-label">A riddle for the advanced scribe:</p>
               <p className="challenge-riddle-text">
                 In a scribe's ledger a queen is worth nine, a rook worth five,

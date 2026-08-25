@@ -241,3 +241,38 @@ textarea:focus-visible,
   color: var(--text);
   line-height: 1.5;
 }
+
+/* Padlock indicator chip — sits above a riddle's label to name the physical
+   colored padlock its answer opens. Fixed light-neutral chip surface + a
+   per-color icon/text so all three colors (silver/black/dark-fuchsia) stay
+   legible in both themes. See intrinsic --padlock-* tokens in tokens.css. */
+.padlock-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3) 0;
+  padding: var(--space-1) var(--space-3);
+  background: var(--padlock-chip-bg);
+  border: 1px solid var(--padlock-chip-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.padlock-chip .lucide {
+  font-size: 1rem;
+}
+
+.padlock-chip-silver {
+  color: var(--padlock-silver);
+}
+
+.padlock-chip-black {
+  color: var(--padlock-black);
+}
+
+.padlock-chip-fuchsia {
+  color: var(--padlock-fuchsia);
+}
