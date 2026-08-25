@@ -34,15 +34,6 @@ const NotationChallenge = ({ onComplete, onBack }) => {
   const [mode, setMode] = useState(null) // 'practice' or 'challenge'
   const [difficulty, setDifficulty] = useState('medium')
   const [perspective, setPerspective] = useState('white') // 'white', 'black', or 'both'
-  const [challengeConfig, setChallengeConfig] = useState(null)
-
-  useEffect(() => {
-    fetch('challenge-config.json')
-      .then((r) => r.json())
-      .then(setChallengeConfig)
-      .catch(() => {})
-  }, [])
-
   // Game state
   const [isPlaying, setIsPlaying] = useState(false)
   const [challenge, setChallenge] = useState(null)
@@ -425,14 +416,7 @@ const NotationChallenge = ({ onComplete, onBack }) => {
               : 'Keep practicing! You need 75% to pass.'}
           </div>
 
-          {difficulty === 'hard' && results.accuracy >= 90 && challengeConfig?.notationChallengeCode && (
-            <div className="challenge-code">
-              <p className="challenge-code-label">Hard mode master! Your unlock code:</p>
-              <span className="challenge-code-value">{challengeConfig.notationChallengeCode}</span>
-            </div>
-          )}
-
-          {difficulty === 'hard' && (
+          {difficulty === 'hard' && results.accuracy >= 90 && (
             <div className="challenge-riddle">
               <p className="challenge-riddle-label">A riddle for the hard-mode reader:</p>
               <p className="challenge-riddle-text">
