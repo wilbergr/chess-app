@@ -59,6 +59,18 @@
      parchment squares, this ink stays >=6:1 on both. */
   --board-ink: #0d1014;
 
+  /* Padlock indicators — intrinsic. Each riddle's results screen shows a small
+     chip naming the physical padlock its answer opens. The chip fills with a
+     fixed light-neutral surface so the icon + text read as colour-on-light in
+     BOTH app themes (a bare black icon would vanish on the dark theme). Like
+     the board tokens these must NOT flip with the theme, so no light override
+     is defined below. Icon colours are darkened to stay >=4.5:1 on the chip. */
+  --padlock-chip-bg: #f4f4f6;
+  --padlock-chip-border: rgba(13, 16, 20, 0.2);
+  --padlock-silver: #63686e;
+  --padlock-black: #16181c;
+  --padlock-fuchsia: #a3006b;
+
   /* Radius (shared scale) */
   --radius-xs: 4px;
   --radius-sm: 6px;

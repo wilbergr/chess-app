@@ -7,6 +7,7 @@ import {
   Circle,
   Dumbbell,
   Lightbulb,
+  Lock,
   PartyPopper,
   Trophy,
   X,
@@ -418,6 +419,10 @@ const NotationChallenge = ({ onComplete, onBack }) => {
 
           {difficulty === 'hard' && results.accuracy >= 90 && (
             <div className="challenge-riddle">
+              <span className="padlock-chip padlock-chip-black">
+                <Lock aria-hidden="true" />
+                Black padlock
+              </span>
               <p className="challenge-riddle-label">A riddle for the hard-mode reader:</p>
               <p className="challenge-riddle-text">
                 White may open with any of its twenty legal first moves, and

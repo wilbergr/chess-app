@@ -54,6 +54,16 @@ ChallengeSelector menu-card SVGs are colored via inline `style={{fill:'var(--tok
 The unreachable Expert/blindfold mode in GameChallenge (no expert games exist in
 `data/games.js`) was removed in PR3; if blindfold returns, rebuild it deliberately.
 
+**Riddle padlock chips:** each riddle's results screen (`.challenge-riddle`) shows a
+`.padlock-chip` (`index.css`) naming the physical colored padlock its answer opens —
+`Lock` icon (`aria-hidden`) + visible color text (color alone isn't a cue). Mapping:
+SquareChallenge=**silver** (204), NotationChallenge=**black** (400),
+NotationWriting=**dark-fuchsia** (953). The chip fills with a *fixed light-neutral*
+surface (intrinsic `--padlock-chip-bg`/`-border`/`-silver`/`-black`/`-fuchsia` in
+`tokens.css`, NO light override) so the colored icon/text read as color-on-light in
+BOTH themes — a bare black icon would vanish on the dark bg. Icon colors are darkened
+to clear 4.5:1 on the chip.
+
 ## Shared button classes (`index.css`)
 
 `.btn` + variants `.btn-primary` (green), `.btn-secondary`, `.btn-ghost`, `.btn-danger`

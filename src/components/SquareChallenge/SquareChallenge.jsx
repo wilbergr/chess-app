@@ -4,6 +4,7 @@ import {
   BookOpen,
   Check,
   Dumbbell,
+  Lock,
   PartyPopper,
   Timer,
   Trophy,
@@ -351,6 +352,10 @@ const SquareChallenge = ({ onComplete, onBack }) => {
 
           {difficulty === 'hard' && results.accuracy >= 90 && (
             <div className="challenge-riddle">
+              <span className="padlock-chip padlock-chip-silver">
+                <Lock aria-hidden="true" />
+                Silver padlock
+              </span>
               <p className="challenge-riddle-label">A riddle for the hard-mode locator:</p>
               <p className="challenge-riddle-text">
                 Trace every square you can find on the eight-by-eight board —
