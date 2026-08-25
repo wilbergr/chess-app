@@ -83,15 +83,6 @@ const NotationWriting = ({ onBack }) => {
   const [mode, setMode] = useState(null)
   const [difficulty, setDifficulty] = useState('beginner')
   const [perspective, setPerspective] = useState('white') // 'white', 'black', or 'both'
-  const [challengeConfig, setChallengeConfig] = useState(null)
-
-  useEffect(() => {
-    fetch('challenge-config.json')
-      .then((r) => r.json())
-      .then(setChallengeConfig)
-      .catch(() => {})
-  }, [])
-
   // Game state
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentPosition, setCurrentPosition] = useState(null)
@@ -520,14 +511,7 @@ const NotationWriting = ({ onBack }) => {
               : 'Keep practicing! You need 75% to pass.'}
           </div>
 
-          {difficulty === 'advanced' && results.accuracy >= 90 && challengeConfig?.notationWritingCode && (
-            <div className="challenge-code">
-              <p className="challenge-code-label">Advanced mode master! Your unlock code:</p>
-              <span className="challenge-code-value">{challengeConfig.notationWritingCode}</span>
-            </div>
-          )}
-
-          {difficulty === 'advanced' && (
+          {difficulty === 'advanced' && results.accuracy >= 90 && (
             <div className="challenge-riddle">
               <p className="challenge-riddle-label">A riddle for the advanced scribe:</p>
               <p className="challenge-riddle-text">
