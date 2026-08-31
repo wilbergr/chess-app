@@ -48,6 +48,15 @@ failed=warning). Icons paired with text are `aria-hidden`; meaning-bearing icons
 indicators render `<Circle>` with `.piece-dot-white`/`.piece-dot-black` (`index.css`),
 filled with the **intrinsic board tokens** so they don't flip with the theme.
 **Board piece SVGs (`ChessPieces.jsx`) are intrinsic — never swap them for icon art.**
+
+**Favicon (`public/favicon.svg`, referenced from `index.html`):** hand-written 32×32 SVG
+in the shared app-family house style (see guitar-app's for the pattern) — dark rounded
+square `<rect rx="6" fill="#1c1917"/>`, subject as a few geometric primitives, one accent
+color, ~sub-1KB, no raster. Chess draws a **knight silhouette in the app accent green
+(`#81b64c`)** — green (not guitar's copper) is what tells chess apart from siblings in a
+tab row. `index.html`'s `<title>` is still the placeholder `chess-app` (deliberately left
+for the owner to name).
+
 ChallengeSelector menu-card SVGs are colored via inline `style={{fill:'var(--token)'}}`
 — SVG presentation attributes can't hold `var()`. Chess coordinates display
 **lowercase** ("e4") everywhere — never `.toUpperCase()` a square for display.
