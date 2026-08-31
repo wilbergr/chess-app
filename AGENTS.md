@@ -54,8 +54,7 @@ in the shared app-family house style (see guitar-app's for the pattern) — dark
 square `<rect rx="6" fill="#1c1917"/>`, subject as a few geometric primitives, one accent
 color, ~sub-1KB, no raster. Chess draws a **knight silhouette in the app accent green
 (`#81b64c`)** — green (not guitar's copper) is what tells chess apart from siblings in a
-tab row. `index.html`'s `<title>` is still the placeholder `chess-app` (deliberately left
-for the owner to name).
+tab row. `index.html`'s `<title>` is `Chess Trainer` (the owner's chosen name).
 
 ChallengeSelector menu-card SVGs are colored via inline `style={{fill:'var(--token)'}}`
 — SVG presentation attributes can't hold `var()`. Chess coordinates display
